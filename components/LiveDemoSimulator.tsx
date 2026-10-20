@@ -23,14 +23,19 @@ import {
 } from "lucide-react";
 
 export default function LiveDemoSimulator() {
-  // Simulator State
-  const [personCount, setPersonCount] = useState<number>(1);
+  // Simulator State: occupants array is the single source of truth
+  const [occupants, setOccupants] = useState<string[]>([
+    "Occupant #1",
+    "Occupant #2",
+    "Occupant #3",
+  ]);
+  const personCount = occupants.length;
   const [doorLocked, setDoorLocked] = useState<boolean>(false);
   const [isVerified, setIsVerified] = useState<boolean>(false);
   const [energySavingActive, setEnergySavingActive] = useState<boolean>(false);
   const [scheduledTime, setScheduledTime] = useState<string>("09:00 AM");
   const [logMessage, setLogMessage] = useState<string>(
-    "Room is currently occupied with 1 person. Power systems running normally."
+    "Room is currently occupied with 3 occupants. Power systems running normally."
   );
   const [ruleAlert, setRuleAlert] = useState<{ type: "error" | "success" | "info"; text: string } | null>(null);
 
@@ -41,8 +46,9 @@ export default function LiveDemoSimulator() {
 
   // Helper action: Person Enters
   const handlePersonEnters = () => {
-    const nextCount = personCount + 1;
-    setPersonCount(nextCount);
+    const nextCount = occupants.length + 1;
+    const nextOccupant = `Occupant #${nextCount}`;
+    setOccupants((prev) => [...prev, nextOccupant]);
     setIsVerified(false);
     if (energySavingActive) {
       setEnergySavingActive(false);
@@ -59,15 +65,15 @@ export default function LiveDemoSimulator() {
 
   // Helper action: Person Leaves
   const handlePersonLeaves = () => {
-    if (personCount <= 0) {
+    if (occupants.length <= 0) {
       setRuleAlert({
         type: "info",
         text: "Room is already unoccupied (0 persons).",
       });
       return;
     }
-    const nextCount = personCount - 1;
-    setPersonCount(nextCount);
+    const nextCount = occupants.length - 1;
+    setOccupants((prev) => prev.slice(0, -1));
     setIsVerified(false);
     setLogMessage(`Person departed. Remaining occupancy count: ${nextCount}.`);
     setRuleAlert(null);
@@ -160,12 +166,12 @@ export default function LiveDemoSimulator() {
 
   // Reset demo
   const handleReset = () => {
-    setPersonCount(1);
+    setOccupants(["Occupant #1", "Occupant #2", "Occupant #3"]);
     setDoorLocked(false);
     setIsVerified(false);
     setEnergySavingActive(false);
     setScheduledTime("09:00 AM");
-    setLogMessage("Simulator reset to baseline room state (1 person inside, unlocked, full power).");
+    setLogMessage("Simulator reset to baseline room state (3 occupants inside, unlocked, full power).");
     setRuleAlert(null);
   };
 
@@ -351,9 +357,9 @@ export default function LiveDemoSimulator() {
                 </div>
 
                 {/* Center of the Room: Occupants Presence Avatar */}
-                <div className="relative z-10 my-6 sm:my-8 flex items-center justify-center">
-                  <div className="flex items-center gap-3 sm:gap-4 flex-wrap justify-center">
-                    {personCount === 0 ? (
+                <div className="relative z-10 my-4 sm:my-6 flex items-center justify-center">
+                  <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap justify-center max-w-full">
+                    {occupants.length === 0 ? (
                       <div className="flex flex-col items-center p-4 sm:p-6 rounded-2xl bg-white/95 dark:bg-black/40 border border-emerald-400 dark:border-brand-green/30 backdrop-blur-sm shadow-md animate-in fade-in">
                         <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-50 dark:bg-brand-green/10 border border-emerald-400/60 dark:border-brand-green/40 flex items-center justify-center text-emerald-700 dark:text-brand-green mb-1.5 sm:mb-2 shadow-sm">
                           <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600 dark:text-brand-green" />
@@ -366,16 +372,17 @@ export default function LiveDemoSimulator() {
                         </span>
                       </div>
                     ) : (
-                      Array.from({ length: Math.min(3, personCount) }).map((_, i) => (
+                      occupants.map((occ, i) => (
                         <div
                           key={i}
+                          aria-label={`Occupant: ${occ}`}
                           className="flex flex-col items-center animate-in zoom-in-95 duration-200"
                         >
-                          <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-purple-100 dark:bg-purple-900/60 border-2 border-purple-400 flex items-center justify-center shadow-md dark:shadow-lg dark:shadow-purple-950/50">
-                            <Users className="w-5 h-5 sm:w-7 sm:h-7 text-purple-700 dark:text-purple-200" />
+                          <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-purple-100 dark:bg-purple-900/60 border-2 border-purple-400 flex items-center justify-center shadow-md dark:shadow-lg dark:shadow-purple-950/50">
+                            <Users className="w-4 h-4 sm:w-6 sm:h-6 text-purple-700 dark:text-purple-200" />
                           </div>
-                          <span className="text-[10px] sm:text-[11px] font-mono text-[#111218] dark:text-white font-bold mt-1">
-                            Occupant #{i + 1}
+                          <span className="text-[9px] sm:text-[10px] font-mono text-[#111218] dark:text-white font-bold mt-1">
+                            {occ}
                           </span>
                         </div>
                       ))

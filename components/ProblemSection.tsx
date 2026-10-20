@@ -13,6 +13,46 @@ import {
   Info,
 } from "lucide-react";
 
+interface ComparisonRoomFanProps {
+  status: "spinning" | "paused";
+  label: string;
+}
+
+function ComparisonRoomFan({ status, label }: ComparisonRoomFanProps) {
+  const isSpinning = status === "spinning";
+  return (
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none z-10">
+      <div
+        className={`w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-colors ${
+          isSpinning
+            ? "bg-white dark:bg-[#1e0a16] border border-amber-400/50 dark:border-amber-500/40 shadow-sm dark:shadow-inner"
+            : "bg-slate-100 dark:bg-[#081716] border border-emerald-200 dark:border-brand-green/30"
+        }`}
+      >
+        <Fan
+          className={`w-6 h-6 sm:w-8 sm:h-8 ${
+            isSpinning
+              ? "text-amber-500 dark:text-amber-400 animate-spin"
+              : "text-slate-400 dark:text-slate-500"
+          }`}
+          style={{ animationDuration: isSpinning ? "1s" : "0s" }}
+        />
+      </div>
+      <div className="h-4 sm:h-5 flex items-center justify-center mt-1">
+        <span
+          className={`text-[9px] sm:text-[10px] font-mono font-semibold whitespace-nowrap ${
+            isSpinning
+              ? "text-amber-600 dark:text-amber-300"
+              : "text-emerald-700 dark:text-brand-green"
+          }`}
+        >
+          {label}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export default function ProblemSection() {
   return (
     <section id="problem" className="py-16 sm:py-24 relative overflow-hidden bg-[#F7F8FA] dark:bg-[#080413]">
@@ -49,7 +89,7 @@ export default function ProblemSection() {
 
             <div>
               {/* Header Label */}
-              <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-rose-200 dark:border-red-500/20">
+              <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-rose-200 dark:border-red-500/20 min-h-[44px]">
                 <div className="flex items-center gap-2 sm:gap-2.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
                   <span className="text-xs sm:text-sm font-mono font-bold tracking-wider text-rose-700 dark:text-red-400 uppercase">
@@ -82,13 +122,8 @@ export default function ProblemSection() {
                   <span className="text-[8px] sm:text-[9px] font-mono text-rose-600 dark:text-red-400 mt-0.5 font-medium">Cooling empty space</span>
                 </div>
 
-                {/* Ceiling Fan (Spinning Wastefully) */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-                  <div className="p-2 sm:p-3 rounded-full bg-white dark:bg-[#1e0a16] border border-amber-400/50 dark:border-amber-500/40 shadow-sm dark:shadow-inner">
-                    <Fan className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500 dark:text-amber-400 animate-spin" style={{ animationDuration: "1s" }} />
-                  </div>
-                  <span className="text-[9px] sm:text-[10px] font-mono text-amber-600 dark:text-amber-300 mt-0.5 font-semibold">Fan max speed</span>
-                </div>
+                {/* Ceiling Fan (Aligned Shared Component) */}
+                <ComparisonRoomFan status="spinning" label="Fan max speed" />
 
                 {/* Bottom Bar: Lock and Waste meter */}
                 <div className="absolute bottom-2.5 sm:bottom-4 inset-x-2.5 sm:inset-x-4 flex items-center justify-between gap-1.5 pointer-events-none">
@@ -132,7 +167,7 @@ export default function ProblemSection() {
 
             <div>
               {/* Header Label */}
-              <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-emerald-200 dark:border-brand-green/20">
+              <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-emerald-200 dark:border-brand-green/20 min-h-[44px]">
                 <div className="flex items-center gap-2 sm:gap-2.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 dark:bg-brand-green animate-ping" />
                   <span className="text-xs sm:text-sm font-mono font-bold tracking-wider text-emerald-800 dark:text-brand-green uppercase">
@@ -165,13 +200,8 @@ export default function ProblemSection() {
                   <span className="text-[8px] sm:text-[9px] font-mono text-[#626775] dark:text-slate-400 mt-0.5">Non-essential cutoff</span>
                 </div>
 
-                {/* Ceiling Fan (STOPPED) */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-                  <div className="p-2 sm:p-3 rounded-full bg-slate-100 dark:bg-[#081716] border border-emerald-200 dark:border-brand-green/30">
-                    <Fan className="w-6 h-6 sm:w-8 sm:h-8 text-slate-400 dark:text-slate-500" />
-                  </div>
-                  <span className="text-[9px] sm:text-[10px] font-mono text-emerald-700 dark:text-brand-green mt-0.5 font-semibold">Fan Paused</span>
-                </div>
+                {/* Ceiling Fan (Aligned Shared Component) */}
+                <ComparisonRoomFan status="paused" label="Fan Paused" />
 
                 {/* Bottom Bar: Security Field and Power Load Meter */}
                 <div className="absolute bottom-2.5 sm:bottom-4 inset-x-2.5 sm:inset-x-4 flex items-center justify-between gap-1.5 pointer-events-none">

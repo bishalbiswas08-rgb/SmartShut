@@ -121,7 +121,7 @@ const componentsData: ComponentDetail[] = [
 ];
 
 export default function ProductCutawaySection() {
-  const [selectedId, setSelectedId] = useState<string>("devices");
+  const [selectedId, setSelectedId] = useState<string>("fingerprint");
 
   const selectedComponent =
     componentsData.find((c) => c.id === selectedId) || componentsData[0];
@@ -467,94 +467,122 @@ export default function ProductCutawaySection() {
                   {/* ===================== CONNECTOR LINES ===================== */}
 
                   {/* Node 02 Connector */}
-                  <path
-                    d="M380 38 L380 58"
-                    className={`transition-all duration-300 ${
-                      selectedId === "camera"
-                        ? "stroke-cyan-500 dark:stroke-brand-cyan animate-pulse"
-                        : "stroke-slate-400/70 dark:stroke-purple-500/40"
-                    }`}
-                    strokeWidth={selectedId === "camera" ? "2.5" : "1.5"}
-                    strokeDasharray={selectedId === "camera" ? "none" : "3 3"}
-                  />
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M380 38 L380 58"
+                      className={
+                        selectedId === "camera"
+                          ? "stroke-cyan-500 dark:stroke-brand-cyan animate-pulse"
+                          : "stroke-slate-400/70 dark:stroke-purple-500/40"
+                      }
+                      strokeWidth={selectedId === "camera" ? "2.5" : "1.5"}
+                      strokeDasharray={selectedId === "camera" ? "none" : "3 3"}
+                    />
+                    <circle cx="380" cy="38" r="2" className={selectedId === "camera" ? "fill-cyan-500 dark:fill-brand-cyan" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="380" cy="58" r="2.5" className={selectedId === "camera" ? "fill-cyan-500 dark:fill-brand-cyan" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
 
                   {/* Node 01 Connector */}
-                  <path
-                    d="M195 175 L235 175 L285 195"
-                    fill="none"
-                    className={`transition-all duration-300 ${
-                      selectedId === "fingerprint"
-                        ? "stroke-emerald-500 dark:stroke-brand-green animate-pulse"
-                        : "stroke-slate-400/70 dark:stroke-purple-500/40"
-                    }`}
-                    strokeWidth={selectedId === "fingerprint" ? "2.5" : "1.5"}
-                    strokeDasharray={selectedId === "fingerprint" ? "none" : "3 3"}
-                  />
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M195 207 L285 207"
+                      fill="none"
+                      className={
+                        selectedId === "fingerprint"
+                          ? "stroke-emerald-500 dark:stroke-brand-green animate-pulse"
+                          : "stroke-slate-400/70 dark:stroke-purple-500/40"
+                      }
+                      strokeWidth={selectedId === "fingerprint" ? "2.5" : "1.5"}
+                      strokeDasharray={selectedId === "fingerprint" ? "none" : "3 3"}
+                    />
+                    <circle cx="195" cy="207" r="2" className={selectedId === "fingerprint" ? "fill-emerald-500 dark:fill-brand-green" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="285" cy="207" r="2.5" className={selectedId === "fingerprint" ? "fill-emerald-500 dark:fill-brand-green" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
 
                   {/* Node 04 Connector */}
-                  <path
-                    d="M565 140 L525 140 L482 135"
-                    fill="none"
-                    className={`transition-all duration-300 ${
-                      selectedId === "occupancy"
-                        ? "stroke-emerald-500 dark:stroke-brand-green animate-pulse"
-                        : "stroke-slate-400/70 dark:stroke-purple-500/40"
-                    }`}
-                    strokeWidth={selectedId === "occupancy" ? "2.5" : "1.5"}
-                    strokeDasharray={selectedId === "occupancy" ? "none" : "3 3"}
-                  />
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M565 135 L482 135"
+                      fill="none"
+                      className={
+                        selectedId === "occupancy"
+                          ? "stroke-emerald-500 dark:stroke-brand-green animate-pulse"
+                          : "stroke-slate-400/70 dark:stroke-purple-500/40"
+                      }
+                      strokeWidth={selectedId === "occupancy" ? "2.5" : "1.5"}
+                      strokeDasharray={selectedId === "occupancy" ? "none" : "3 3"}
+                    />
+                    <circle cx="565" cy="135" r="2" className={selectedId === "occupancy" ? "fill-emerald-500 dark:fill-brand-green" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="482" cy="135" r="2.5" className={selectedId === "occupancy" ? "fill-emerald-500 dark:fill-brand-green" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
 
                   {/* Node 05 Connector */}
-                  <path
-                    d="M195 290 L245 290 L285 290"
-                    fill="none"
-                    className={`transition-all duration-300 ${
-                      selectedId === "controller"
-                        ? "stroke-purple-500 dark:stroke-purple-300 animate-pulse"
-                        : "stroke-slate-400/70 dark:stroke-purple-500/40"
-                    }`}
-                    strokeWidth={selectedId === "controller" ? "2.5" : "1.5"}
-                    strokeDasharray={selectedId === "controller" ? "none" : "3 3"}
-                  />
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M195 292 L285 292"
+                      fill="none"
+                      className={
+                        selectedId === "controller"
+                          ? "stroke-purple-500 dark:stroke-purple-300 animate-pulse"
+                          : "stroke-slate-400/70 dark:stroke-purple-500/40"
+                      }
+                      strokeWidth={selectedId === "controller" ? "2.5" : "1.5"}
+                      strokeDasharray={selectedId === "controller" ? "none" : "3 3"}
+                    />
+                    <circle cx="195" cy="292" r="2" className={selectedId === "controller" ? "fill-purple-500 dark:fill-purple-300" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="285" cy="292" r="2.5" className={selectedId === "controller" ? "fill-purple-500 dark:fill-purple-300" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
 
                   {/* Node 03 Connector */}
-                  <path
-                    d="M565 290 L525 290 L485 290"
-                    fill="none"
-                    className={`transition-all duration-300 ${
-                      selectedId === "lock"
-                        ? "stroke-purple-500 dark:stroke-purple-400 animate-pulse"
-                        : "stroke-slate-400/70 dark:stroke-purple-500/40"
-                    }`}
-                    strokeWidth={selectedId === "lock" ? "2.5" : "1.5"}
-                    strokeDasharray={selectedId === "lock" ? "none" : "3 3"}
-                  />
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M565 291 L521 291"
+                      fill="none"
+                      className={
+                        selectedId === "lock"
+                          ? "stroke-purple-500 dark:stroke-purple-400 animate-pulse"
+                          : "stroke-slate-400/70 dark:stroke-purple-500/40"
+                      }
+                      strokeWidth={selectedId === "lock" ? "2.5" : "1.5"}
+                      strokeDasharray={selectedId === "lock" ? "none" : "3 3"}
+                    />
+                    <circle cx="565" cy="291" r="2" className={selectedId === "lock" ? "fill-purple-500 dark:fill-purple-400" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="521" cy="291" r="2.5" className={selectedId === "lock" ? "fill-purple-500 dark:fill-purple-400" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
 
                   {/* Node 07 Connector */}
-                  <path
-                    d="M195 415 L245 415 L285 405"
-                    fill="none"
-                    className={`transition-all duration-300 ${
-                      selectedId === "phone"
-                        ? "stroke-cyan-500 dark:stroke-brand-cyan animate-pulse"
-                        : "stroke-slate-400/70 dark:stroke-purple-500/40"
-                    }`}
-                    strokeWidth={selectedId === "phone" ? "2.5" : "1.5"}
-                    strokeDasharray={selectedId === "phone" ? "none" : "3 3"}
-                  />
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M195 401 L285 401"
+                      fill="none"
+                      className={
+                        selectedId === "phone"
+                          ? "stroke-cyan-500 dark:stroke-brand-cyan animate-pulse"
+                          : "stroke-slate-400/70 dark:stroke-purple-500/40"
+                      }
+                      strokeWidth={selectedId === "phone" ? "2.5" : "1.5"}
+                      strokeDasharray={selectedId === "phone" ? "none" : "3 3"}
+                    />
+                    <circle cx="195" cy="401" r="2" className={selectedId === "phone" ? "fill-cyan-500 dark:fill-brand-cyan" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="285" cy="401" r="2.5" className={selectedId === "phone" ? "fill-cyan-500 dark:fill-brand-cyan" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
 
-                  {/* Node 06 Connector (Highlighted when active) */}
-                  <path
-                    d="M565 415 L525 415 L478 405"
-                    fill="none"
-                    className={`transition-all duration-300 ${
-                      selectedId === "devices"
-                        ? "stroke-emerald-500 dark:stroke-brand-green animate-pulse"
-                        : "stroke-slate-400/70 dark:stroke-purple-500/40"
-                    }`}
-                    strokeWidth={selectedId === "devices" ? "2.5" : "1.5"}
-                    strokeDasharray={selectedId === "devices" ? "none" : "3 3"}
-                  />
+                  {/* Node 06 Connector */}
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M565 402 L478 402"
+                      fill="none"
+                      className={
+                        selectedId === "devices"
+                          ? "stroke-emerald-500 dark:stroke-brand-green animate-pulse"
+                          : "stroke-slate-400/70 dark:stroke-purple-500/40"
+                      }
+                      strokeWidth={selectedId === "devices" ? "2.5" : "1.5"}
+                      strokeDasharray={selectedId === "devices" ? "none" : "3 3"}
+                    />
+                    <circle cx="565" cy="402" r="2" className={selectedId === "devices" ? "fill-emerald-500 dark:fill-brand-green" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="478" cy="402" r="2.5" className={selectedId === "devices" ? "fill-emerald-500 dark:fill-brand-green" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
 
                   {/* ===================== INTERACTIVE NODES ===================== */}
 
@@ -613,10 +641,10 @@ export default function ProductCutawaySection() {
                     onMouseEnter={() => setSelectedId("fingerprint")}
                     onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setSelectedId("fingerprint")}
                   >
-                    <rect x="25" y="152" width="170" height="46" rx="8" className="fill-transparent" />
+                    <rect x="20" y="184" width="175" height="46" rx="8" className="fill-transparent" />
                     <circle
-                      cx="56"
-                      cy="175"
+                      cx="50"
+                      cy="207"
                       r={selectedId === "fingerprint" ? "15" : "13"}
                       className={`transition-all duration-300 ${
                         selectedId === "fingerprint"
@@ -627,8 +655,8 @@ export default function ProductCutawaySection() {
                       filter={selectedId === "fingerprint" ? "url(#glow-green-dt)" : undefined}
                     />
                     <text
-                      x="56"
-                      y="179"
+                      x="50"
+                      y="211"
                       className={`font-mono text-[10px] font-extrabold select-none ${
                         selectedId === "fingerprint" ? "fill-black" : "fill-slate-800 dark:fill-purple-200"
                       }`}
@@ -637,15 +665,15 @@ export default function ProductCutawaySection() {
                       01
                     </text>
                     <text
-                      x="78"
-                      y="173"
+                      x="72"
+                      y="204"
                       className={`font-mono text-[11px] font-bold select-none ${
                         selectedId === "fingerprint" ? "fill-emerald-700 dark:fill-brand-green" : "fill-slate-800 dark:fill-slate-200"
                       }`}
                     >
                       FINGERPRINT
                     </text>
-                    <text x="78" y="185" className="font-mono text-[9px] fill-slate-500 dark:fill-slate-400 select-none">
+                    <text x="72" y="216" className="font-mono text-[9px] fill-slate-500 dark:fill-slate-400 select-none">
                       BIOMETRIC ACCESS
                     </text>
                   </g>
@@ -660,10 +688,10 @@ export default function ProductCutawaySection() {
                     onMouseEnter={() => setSelectedId("occupancy")}
                     onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setSelectedId("occupancy")}
                   >
-                    <rect x="565" y="117" width="170" height="46" rx="8" className="fill-transparent" />
+                    <rect x="565" y="112" width="175" height="46" rx="8" className="fill-transparent" />
                     <circle
-                      cx="704"
-                      cy="140"
+                      cx="710"
+                      cy="135"
                       r={selectedId === "occupancy" ? "15" : "13"}
                       className={`transition-all duration-300 ${
                         selectedId === "occupancy"
@@ -674,8 +702,8 @@ export default function ProductCutawaySection() {
                       filter={selectedId === "occupancy" ? "url(#glow-green-dt)" : undefined}
                     />
                     <text
-                      x="704"
-                      y="144"
+                      x="710"
+                      y="139"
                       className={`font-mono text-[10px] font-extrabold select-none ${
                         selectedId === "occupancy" ? "fill-black" : "fill-slate-800 dark:fill-purple-200"
                       }`}
@@ -684,8 +712,8 @@ export default function ProductCutawaySection() {
                       04
                     </text>
                     <text
-                      x="682"
-                      y="138"
+                      x="688"
+                      y="132"
                       className={`font-mono text-[11px] font-bold select-none ${
                         selectedId === "occupancy" ? "fill-emerald-700 dark:fill-brand-green" : "fill-slate-800 dark:fill-slate-200"
                       }`}
@@ -693,7 +721,7 @@ export default function ProductCutawaySection() {
                     >
                       OCCUPANCY
                     </text>
-                    <text x="682" y="150" className="font-mono text-[9px] fill-slate-500 dark:fill-slate-400 select-none" textAnchor="end">
+                    <text x="688" y="144" className="font-mono text-[9px] fill-slate-500 dark:fill-slate-400 select-none" textAnchor="end">
                       SPATIAL SENSING
                     </text>
                   </g>
@@ -708,10 +736,10 @@ export default function ProductCutawaySection() {
                     onMouseEnter={() => setSelectedId("controller")}
                     onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setSelectedId("controller")}
                   >
-                    <rect x="25" y="267" width="170" height="46" rx="8" className="fill-transparent" />
+                    <rect x="20" y="269" width="175" height="46" rx="8" className="fill-transparent" />
                     <circle
-                      cx="56"
-                      cy="290"
+                      cx="50"
+                      cy="292"
                       r={selectedId === "controller" ? "15" : "13"}
                       className={`transition-all duration-300 ${
                         selectedId === "controller"
@@ -722,8 +750,8 @@ export default function ProductCutawaySection() {
                       filter={selectedId === "controller" ? "url(#glow-purple-dt)" : undefined}
                     />
                     <text
-                      x="56"
-                      y="294"
+                      x="50"
+                      y="296"
                       className={`font-mono text-[10px] font-extrabold select-none ${
                         selectedId === "controller" ? "fill-black" : "fill-slate-800 dark:fill-purple-200"
                       }`}
@@ -732,15 +760,15 @@ export default function ProductCutawaySection() {
                       05
                     </text>
                     <text
-                      x="78"
-                      y="288"
+                      x="72"
+                      y="289"
                       className={`font-mono text-[11px] font-bold select-none ${
                         selectedId === "controller" ? "fill-purple-700 dark:fill-purple-300" : "fill-slate-800 dark:fill-slate-200"
                       }`}
                     >
                       CONTROLLER
                     </text>
-                    <text x="78" y="300" className="font-mono text-[9px] fill-slate-500 dark:fill-slate-400 select-none">
+                    <text x="72" y="301" className="font-mono text-[9px] fill-slate-500 dark:fill-slate-400 select-none">
                       EMBEDDED BRAIN
                     </text>
                   </g>
@@ -755,10 +783,10 @@ export default function ProductCutawaySection() {
                     onMouseEnter={() => setSelectedId("lock")}
                     onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setSelectedId("lock")}
                   >
-                    <rect x="565" y="267" width="170" height="46" rx="8" className="fill-transparent" />
+                    <rect x="565" y="268" width="175" height="46" rx="8" className="fill-transparent" />
                     <circle
-                      cx="704"
-                      cy="290"
+                      cx="710"
+                      cy="291"
                       r={selectedId === "lock" ? "15" : "13"}
                       className={`transition-all duration-300 ${
                         selectedId === "lock"
@@ -769,8 +797,8 @@ export default function ProductCutawaySection() {
                       filter={selectedId === "lock" ? "url(#glow-purple-dt)" : undefined}
                     />
                     <text
-                      x="704"
-                      y="294"
+                      x="710"
+                      y="295"
                       className={`font-mono text-[10px] font-extrabold select-none ${
                         selectedId === "lock" ? "fill-black" : "fill-slate-800 dark:fill-purple-200"
                       }`}
@@ -779,7 +807,7 @@ export default function ProductCutawaySection() {
                       03
                     </text>
                     <text
-                      x="682"
+                      x="688"
                       y="288"
                       className={`font-mono text-[11px] font-bold select-none ${
                         selectedId === "lock" ? "fill-purple-700 dark:fill-purple-300" : "fill-slate-800 dark:fill-slate-200"
@@ -788,7 +816,7 @@ export default function ProductCutawaySection() {
                     >
                       SMART LOCK
                     </text>
-                    <text x="682" y="300" className="font-mono text-[9px] fill-slate-500 dark:fill-slate-400 select-none" textAnchor="end">
+                    <text x="688" y="300" className="font-mono text-[9px] fill-slate-500 dark:fill-slate-400 select-none" textAnchor="end">
                       MOTORIZED DEADBOLT
                     </text>
                   </g>
@@ -803,10 +831,10 @@ export default function ProductCutawaySection() {
                     onMouseEnter={() => setSelectedId("phone")}
                     onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setSelectedId("phone")}
                   >
-                    <rect x="25" y="392" width="170" height="46" rx="8" className="fill-transparent" />
+                    <rect x="20" y="378" width="175" height="46" rx="8" className="fill-transparent" />
                     <circle
-                      cx="56"
-                      cy="415"
+                      cx="50"
+                      cy="401"
                       r={selectedId === "phone" ? "15" : "13"}
                       className={`transition-all duration-300 ${
                         selectedId === "phone"
@@ -817,8 +845,8 @@ export default function ProductCutawaySection() {
                       filter={selectedId === "phone" ? "url(#glow-cyan-dt)" : undefined}
                     />
                     <text
-                      x="56"
-                      y="419"
+                      x="50"
+                      y="405"
                       className={`font-mono text-[10px] font-extrabold select-none ${
                         selectedId === "phone" ? "fill-black" : "fill-slate-800 dark:fill-purple-200"
                       }`}
@@ -827,20 +855,20 @@ export default function ProductCutawaySection() {
                       07
                     </text>
                     <text
-                      x="78"
-                      y="413"
+                      x="72"
+                      y="398"
                       className={`font-mono text-[11px] font-bold select-none ${
                         selectedId === "phone" ? "fill-cyan-700 dark:fill-brand-cyan" : "fill-slate-800 dark:fill-slate-200"
                       }`}
                     >
                       GATEWAY
                     </text>
-                    <text x="78" y="425" className="font-mono text-[9px] fill-slate-500 dark:fill-slate-400 select-none">
+                    <text x="72" y="410" className="font-mono text-[9px] fill-slate-500 dark:fill-slate-400 select-none">
                       ENCRYPTED BRIDGE
                     </text>
                   </g>
 
-                  {/* NODE 06: CONNECTED ROOM DEVICE HUB (Right Bottom - Selected by default) */}
+                  {/* NODE 06: CONNECTED ROOM DEVICE HUB (Right Bottom) */}
                   <g
                     className="cursor-pointer"
                     role="button"
@@ -850,22 +878,22 @@ export default function ProductCutawaySection() {
                     onMouseEnter={() => setSelectedId("devices")}
                     onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setSelectedId("devices")}
                   >
-                    <rect x="565" y="392" width="170" height="46" rx="8" className="fill-transparent" />
+                    <rect x="565" y="379" width="175" height="46" rx="8" className="fill-transparent" />
                     <circle
-                      cx="704"
-                      cy="415"
-                      r={selectedId === "devices" ? "16" : "13"}
+                      cx="710"
+                      cy="402"
+                      r={selectedId === "devices" ? "15" : "13"}
                       className={`transition-all duration-300 ${
                         selectedId === "devices"
-                          ? "fill-emerald-500 dark:fill-brand-green stroke-emerald-300 dark:stroke-white ring-4 ring-emerald-400/30"
+                          ? "fill-emerald-500 dark:fill-brand-green stroke-emerald-300 dark:stroke-white"
                           : "fill-white dark:fill-[#120826] stroke-slate-400 dark:stroke-purple-500/60"
                       }`}
-                      strokeWidth={selectedId === "devices" ? "2.5" : "1.5"}
+                      strokeWidth={selectedId === "devices" ? "2" : "1.5"}
                       filter={selectedId === "devices" ? "url(#glow-green-dt)" : undefined}
                     />
                     <text
-                      x="704"
-                      y="419"
+                      x="710"
+                      y="406"
                       className={`font-mono text-[10px] font-extrabold select-none ${
                         selectedId === "devices" ? "fill-black" : "fill-slate-800 dark:fill-purple-200"
                       }`}
@@ -874,8 +902,8 @@ export default function ProductCutawaySection() {
                       06
                     </text>
                     <text
-                      x="682"
-                      y="413"
+                      x="688"
+                      y="399"
                       className={`font-mono text-[11px] font-bold select-none ${
                         selectedId === "devices" ? "fill-emerald-700 dark:fill-brand-green" : "fill-slate-800 dark:fill-slate-200"
                       }`}
@@ -883,7 +911,7 @@ export default function ProductCutawaySection() {
                     >
                       DEVICE HUB
                     </text>
-                    <text x="682" y="425" className="font-mono text-[9px] fill-slate-500 dark:fill-slate-400 select-none" textAnchor="end">
+                    <text x="688" y="411" className="font-mono text-[9px] fill-slate-500 dark:fill-slate-400 select-none" textAnchor="end">
                       ENERGY CONTROL BUS
                     </text>
                   </g>
@@ -1102,60 +1130,94 @@ export default function ProductCutawaySection() {
 
                   {/* ===================== MOBILE CONNECTORS ===================== */}
                   {/* 02 Connector */}
-                  <path
-                    d="M190 32 L190 52"
-                    className={selectedId === "camera" ? "stroke-cyan-500 dark:stroke-brand-cyan animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
-                    strokeWidth={selectedId === "camera" ? "2" : "1.2"}
-                    strokeDasharray={selectedId === "camera" ? "none" : "2 2"}
-                  />
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M190 32 L190 52"
+                      className={selectedId === "camera" ? "stroke-cyan-500 dark:stroke-brand-cyan animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
+                      strokeWidth={selectedId === "camera" ? "2" : "1.2"}
+                      strokeDasharray={selectedId === "camera" ? "none" : "2 2"}
+                    />
+                    <circle cx="190" cy="32" r="1.5" className={selectedId === "camera" ? "fill-cyan-500 dark:fill-brand-cyan" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="190" cy="52" r="2" className={selectedId === "camera" ? "fill-cyan-500 dark:fill-brand-cyan" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
+
                   {/* 01 Connector */}
-                  <path
-                    d="M48 135 L76 135 L106 170"
-                    fill="none"
-                    className={selectedId === "fingerprint" ? "stroke-emerald-500 dark:stroke-brand-green animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
-                    strokeWidth={selectedId === "fingerprint" ? "2" : "1.2"}
-                    strokeDasharray={selectedId === "fingerprint" ? "none" : "2 2"}
-                  />
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M48 182 L106 182"
+                      fill="none"
+                      className={selectedId === "fingerprint" ? "stroke-emerald-500 dark:stroke-brand-green animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
+                      strokeWidth={selectedId === "fingerprint" ? "2" : "1.2"}
+                      strokeDasharray={selectedId === "fingerprint" ? "none" : "2 2"}
+                    />
+                    <circle cx="48" cy="182" r="1.5" className={selectedId === "fingerprint" ? "fill-emerald-500 dark:fill-brand-green" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="106" cy="182" r="2" className={selectedId === "fingerprint" ? "fill-emerald-500 dark:fill-brand-green" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
+
                   {/* 04 Connector */}
-                  <path
-                    d="M332 135 L304 135 L274 125"
-                    fill="none"
-                    className={selectedId === "occupancy" ? "stroke-emerald-500 dark:stroke-brand-green animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
-                    strokeWidth={selectedId === "occupancy" ? "2" : "1.2"}
-                    strokeDasharray={selectedId === "occupancy" ? "none" : "2 2"}
-                  />
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M332 124 L274 124"
+                      fill="none"
+                      className={selectedId === "occupancy" ? "stroke-emerald-500 dark:stroke-brand-green animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
+                      strokeWidth={selectedId === "occupancy" ? "2" : "1.2"}
+                      strokeDasharray={selectedId === "occupancy" ? "none" : "2 2"}
+                    />
+                    <circle cx="332" cy="124" r="1.5" className={selectedId === "occupancy" ? "fill-emerald-500 dark:fill-brand-green" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="274" cy="124" r="2" className={selectedId === "occupancy" ? "fill-emerald-500 dark:fill-brand-green" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
+
                   {/* 05 Connector */}
-                  <path
-                    d="M48 255 L76 255 L106 255"
-                    fill="none"
-                    className={selectedId === "controller" ? "stroke-purple-500 dark:stroke-purple-300 animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
-                    strokeWidth={selectedId === "controller" ? "2" : "1.2"}
-                    strokeDasharray={selectedId === "controller" ? "none" : "2 2"}
-                  />
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M48 257 L106 257"
+                      fill="none"
+                      className={selectedId === "controller" ? "stroke-purple-500 dark:stroke-purple-300 animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
+                      strokeWidth={selectedId === "controller" ? "2" : "1.2"}
+                      strokeDasharray={selectedId === "controller" ? "none" : "2 2"}
+                    />
+                    <circle cx="48" cy="257" r="1.5" className={selectedId === "controller" ? "fill-purple-500 dark:fill-purple-300" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="106" cy="257" r="2" className={selectedId === "controller" ? "fill-purple-500 dark:fill-purple-300" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
+
                   {/* 03 Connector */}
-                  <path
-                    d="M332 255 L306 255 L276 255"
-                    fill="none"
-                    className={selectedId === "lock" ? "stroke-purple-500 dark:stroke-purple-400 animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
-                    strokeWidth={selectedId === "lock" ? "2" : "1.2"}
-                    strokeDasharray={selectedId === "lock" ? "none" : "2 2"}
-                  />
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M332 255 L306 255"
+                      fill="none"
+                      className={selectedId === "lock" ? "stroke-purple-500 dark:stroke-purple-400 animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
+                      strokeWidth={selectedId === "lock" ? "2" : "1.2"}
+                      strokeDasharray={selectedId === "lock" ? "none" : "2 2"}
+                    />
+                    <circle cx="332" cy="255" r="1.5" className={selectedId === "lock" ? "fill-purple-500 dark:fill-purple-400" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="306" cy="255" r="2" className={selectedId === "lock" ? "fill-purple-500 dark:fill-purple-400" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
+
                   {/* 07 Connector */}
-                  <path
-                    d="M48 375 L76 375 L106 360"
-                    fill="none"
-                    className={selectedId === "phone" ? "stroke-cyan-500 dark:stroke-brand-cyan animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
-                    strokeWidth={selectedId === "phone" ? "2" : "1.2"}
-                    strokeDasharray={selectedId === "phone" ? "none" : "2 2"}
-                  />
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M48 362 L106 362"
+                      fill="none"
+                      className={selectedId === "phone" ? "stroke-cyan-500 dark:stroke-brand-cyan animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
+                      strokeWidth={selectedId === "phone" ? "2" : "1.2"}
+                      strokeDasharray={selectedId === "phone" ? "none" : "2 2"}
+                    />
+                    <circle cx="48" cy="362" r="1.5" className={selectedId === "phone" ? "fill-cyan-500 dark:fill-brand-cyan" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="106" cy="362" r="2" className={selectedId === "phone" ? "fill-cyan-500 dark:fill-brand-cyan" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
+
                   {/* 06 Connector */}
-                  <path
-                    d="M332 375 L304 375 L274 360"
-                    fill="none"
-                    className={selectedId === "devices" ? "stroke-emerald-500 dark:stroke-brand-green animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
-                    strokeWidth={selectedId === "devices" ? "2" : "1.2"}
-                    strokeDasharray={selectedId === "devices" ? "none" : "2 2"}
-                  />
+                  <g className="transition-all duration-300">
+                    <path
+                      d="M332 362 L274 362"
+                      fill="none"
+                      className={selectedId === "devices" ? "stroke-emerald-500 dark:stroke-brand-green animate-pulse" : "stroke-slate-400/70 dark:stroke-purple-500/40"}
+                      strokeWidth={selectedId === "devices" ? "2" : "1.2"}
+                      strokeDasharray={selectedId === "devices" ? "none" : "2 2"}
+                    />
+                    <circle cx="332" cy="362" r="1.5" className={selectedId === "devices" ? "fill-emerald-500 dark:fill-brand-green" : "fill-slate-400 dark:fill-purple-500/60"} />
+                    <circle cx="274" cy="362" r="2" className={selectedId === "devices" ? "fill-emerald-500 dark:fill-brand-green" : "fill-slate-400 dark:fill-purple-500/60"} />
+                  </g>
 
                   {/* ===================== MOBILE NODES ===================== */}
 
@@ -1194,10 +1256,10 @@ export default function ProductCutawaySection() {
                     aria-label="Subsystem 01 Fingerprint Sensor"
                     onClick={() => setSelectedId("fingerprint")}
                   >
-                    <circle cx="34" cy="135" r="24" className="fill-transparent" />
+                    <circle cx="34" cy="182" r="24" className="fill-transparent" />
                     <circle
                       cx="34"
-                      cy="135"
+                      cy="182"
                       r={selectedId === "fingerprint" ? "14" : "12"}
                       className={selectedId === "fingerprint" ? "fill-emerald-500 dark:fill-brand-green stroke-emerald-300 dark:stroke-white" : "fill-white dark:fill-[#120826] stroke-slate-400 dark:stroke-purple-500/60"}
                       strokeWidth={selectedId === "fingerprint" ? "2" : "1.2"}
@@ -1205,7 +1267,7 @@ export default function ProductCutawaySection() {
                     />
                     <text
                       x="34"
-                      y="139"
+                      y="186"
                       className={`font-mono text-[9px] font-extrabold select-none ${selectedId === "fingerprint" ? "fill-black" : "fill-slate-800 dark:fill-purple-200"}`}
                       textAnchor="middle"
                     >
@@ -1213,7 +1275,7 @@ export default function ProductCutawaySection() {
                     </text>
                     <text
                       x="34"
-                      y="157"
+                      y="204"
                       className={`font-mono text-[8px] font-bold select-none ${selectedId === "fingerprint" ? "fill-emerald-700 dark:fill-brand-green" : "fill-slate-600 dark:fill-slate-400"}`}
                       textAnchor="middle"
                     >
@@ -1229,10 +1291,10 @@ export default function ProductCutawaySection() {
                     aria-label="Subsystem 04 Occupancy Module"
                     onClick={() => setSelectedId("occupancy")}
                   >
-                    <circle cx="346" cy="135" r="24" className="fill-transparent" />
+                    <circle cx="346" cy="124" r="24" className="fill-transparent" />
                     <circle
                       cx="346"
-                      cy="135"
+                      cy="124"
                       r={selectedId === "occupancy" ? "14" : "12"}
                       className={selectedId === "occupancy" ? "fill-emerald-500 dark:fill-brand-green stroke-emerald-300 dark:stroke-white" : "fill-white dark:fill-[#120826] stroke-slate-400 dark:stroke-purple-500/60"}
                       strokeWidth={selectedId === "occupancy" ? "2" : "1.2"}
@@ -1240,7 +1302,7 @@ export default function ProductCutawaySection() {
                     />
                     <text
                       x="346"
-                      y="139"
+                      y="128"
                       className={`font-mono text-[9px] font-extrabold select-none ${selectedId === "occupancy" ? "fill-black" : "fill-slate-800 dark:fill-purple-200"}`}
                       textAnchor="middle"
                     >
@@ -1248,7 +1310,7 @@ export default function ProductCutawaySection() {
                     </text>
                     <text
                       x="346"
-                      y="157"
+                      y="146"
                       className={`font-mono text-[8px] font-bold select-none ${selectedId === "occupancy" ? "fill-emerald-700 dark:fill-brand-green" : "fill-slate-600 dark:fill-slate-400"}`}
                       textAnchor="middle"
                     >
@@ -1264,10 +1326,10 @@ export default function ProductCutawaySection() {
                     aria-label="Subsystem 05 Central Controller"
                     onClick={() => setSelectedId("controller")}
                   >
-                    <circle cx="34" cy="255" r="24" className="fill-transparent" />
+                    <circle cx="34" cy="257" r="24" className="fill-transparent" />
                     <circle
                       cx="34"
-                      cy="255"
+                      cy="257"
                       r={selectedId === "controller" ? "14" : "12"}
                       className={selectedId === "controller" ? "fill-purple-500 dark:fill-purple-300 stroke-purple-300 dark:stroke-white" : "fill-white dark:fill-[#120826] stroke-slate-400 dark:stroke-purple-500/60"}
                       strokeWidth={selectedId === "controller" ? "2" : "1.2"}
@@ -1275,7 +1337,7 @@ export default function ProductCutawaySection() {
                     />
                     <text
                       x="34"
-                      y="259"
+                      y="261"
                       className={`font-mono text-[9px] font-extrabold select-none ${selectedId === "controller" ? "fill-black" : "fill-slate-800 dark:fill-purple-200"}`}
                       textAnchor="middle"
                     >
@@ -1283,7 +1345,7 @@ export default function ProductCutawaySection() {
                     </text>
                     <text
                       x="34"
-                      y="277"
+                      y="279"
                       className={`font-mono text-[8px] font-bold select-none ${selectedId === "controller" ? "fill-purple-700 dark:fill-purple-300" : "fill-slate-600 dark:fill-slate-400"}`}
                       textAnchor="middle"
                     >
@@ -1334,10 +1396,10 @@ export default function ProductCutawaySection() {
                     aria-label="Subsystem 07 Encrypted Gateway"
                     onClick={() => setSelectedId("phone")}
                   >
-                    <circle cx="34" cy="375" r="24" className="fill-transparent" />
+                    <circle cx="34" cy="362" r="24" className="fill-transparent" />
                     <circle
                       cx="34"
-                      cy="375"
+                      cy="362"
                       r={selectedId === "phone" ? "14" : "12"}
                       className={selectedId === "phone" ? "fill-cyan-500 dark:fill-brand-cyan stroke-cyan-300 dark:stroke-white" : "fill-white dark:fill-[#120826] stroke-slate-400 dark:stroke-purple-500/60"}
                       strokeWidth={selectedId === "phone" ? "2" : "1.2"}
@@ -1345,7 +1407,7 @@ export default function ProductCutawaySection() {
                     />
                     <text
                       x="34"
-                      y="379"
+                      y="366"
                       className={`font-mono text-[9px] font-extrabold select-none ${selectedId === "phone" ? "fill-black" : "fill-slate-800 dark:fill-purple-200"}`}
                       textAnchor="middle"
                     >
@@ -1353,7 +1415,7 @@ export default function ProductCutawaySection() {
                     </text>
                     <text
                       x="34"
-                      y="397"
+                      y="384"
                       className={`font-mono text-[8px] font-bold select-none ${selectedId === "phone" ? "fill-cyan-700 dark:fill-brand-cyan" : "fill-slate-600 dark:fill-slate-400"}`}
                       textAnchor="middle"
                     >
@@ -1361,7 +1423,7 @@ export default function ProductCutawaySection() {
                     </text>
                   </g>
 
-                  {/* 06 DEVICE HUB (Right Bottom - Selected by default) */}
+                  {/* 06 DEVICE HUB (Right Bottom) */}
                   <g
                     className="cursor-pointer"
                     role="button"
@@ -1369,18 +1431,18 @@ export default function ProductCutawaySection() {
                     aria-label="Subsystem 06 Connected Room Device Hub"
                     onClick={() => setSelectedId("devices")}
                   >
-                    <circle cx="346" cy="375" r="24" className="fill-transparent" />
+                    <circle cx="346" cy="362" r="24" className="fill-transparent" />
                     <circle
                       cx="346"
-                      cy="375"
-                      r={selectedId === "devices" ? "15" : "12"}
+                      cy="362"
+                      r={selectedId === "devices" ? "14" : "12"}
                       className={selectedId === "devices" ? "fill-emerald-500 dark:fill-brand-green stroke-emerald-300 dark:stroke-white" : "fill-white dark:fill-[#120826] stroke-slate-400 dark:stroke-purple-500/60"}
-                      strokeWidth={selectedId === "devices" ? "2.2" : "1.2"}
+                      strokeWidth={selectedId === "devices" ? "2" : "1.2"}
                       filter={selectedId === "devices" ? "url(#glow-green-mb)" : undefined}
                     />
                     <text
                       x="346"
-                      y="379"
+                      y="366"
                       className={`font-mono text-[9px] font-extrabold select-none ${selectedId === "devices" ? "fill-black" : "fill-slate-800 dark:fill-purple-200"}`}
                       textAnchor="middle"
                     >
@@ -1388,7 +1450,7 @@ export default function ProductCutawaySection() {
                     </text>
                     <text
                       x="346"
-                      y="397"
+                      y="384"
                       className={`font-mono text-[8px] font-bold select-none ${selectedId === "devices" ? "fill-emerald-700 dark:fill-brand-green" : "fill-slate-600 dark:fill-slate-400"}`}
                       textAnchor="middle"
                     >

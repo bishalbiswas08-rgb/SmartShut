@@ -137,21 +137,73 @@ export default function HeroSection() {
 
               {/* Architectural Entrance Graphic (SVG & Layered UI) */}
               <div className="relative w-full min-h-[330px] sm:min-h-[380px] md:aspect-[16/11] rounded-xl sm:rounded-2xl bg-[#EEF2F9] dark:bg-[#090413] border border-[#CBD5E1] dark:border-purple-900/40 overflow-hidden flex flex-col items-center justify-center py-2 sm:py-3 md:py-0">
-                {/* Inside Room Perspective */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#EAEFF8] via-[#F1F4FA] to-[#E3E8F3] dark:from-[#120726] dark:via-[#0b0517] dark:to-[#04010a]">
-                  <svg className="absolute inset-0 w-full h-full opacity-35 dark:opacity-25" viewBox="0 0 600 450">
-                    <line x1="0" y1="60" x2="600" y2="60" stroke="#94a3b8" className="dark:stroke-[#a855f7]" strokeWidth="0.8" />
-                    <line x1="120" y1="0" x2="200" y2="180" stroke="#94a3b8" className="dark:stroke-[#a855f7]" strokeWidth="0.6" strokeDasharray="3 3" />
-                    <line x1="480" y1="0" x2="400" y2="180" stroke="#94a3b8" className="dark:stroke-[#a855f7]" strokeWidth="0.6" strokeDasharray="3 3" />
-                    <circle cx="250" cy="80" r="14" fill="#e2e8f0" stroke="#94a3b8" className="dark:fill-[#1b0e36] dark:stroke-[#4c1d95]" strokeWidth="1.5" />
-                    <line x1="250" y1="60" x2="250" y2="80" stroke="#94a3b8" className="dark:stroke-[#6b21a8]" strokeWidth="1.5" />
-                    <circle cx="350" cy="80" r="14" fill="#e2e8f0" stroke="#94a3b8" className="dark:fill-[#1b0e36] dark:stroke-[#4c1d95]" strokeWidth="1.5" />
-                    <line x1="350" y1="60" x2="350" y2="80" stroke="#94a3b8" className="dark:stroke-[#6b21a8]" strokeWidth="1.5" />
-                    <rect x="420" y="70" width="70" height="24" rx="3" fill="#ffffff" stroke="#94a3b8" className="dark:fill-[#120824] dark:stroke-[#4c1d95]" strokeWidth="1" />
-                    <text x="455" y="86" fill="#64748b" className="dark:fill-[#6b7280]" fontSize="8" fontFamily="monospace" textAnchor="middle">HVAC [OFF]</text>
-                    <circle cx="300" cy="115" r="5" fill="#e2e8f0" stroke="#94a3b8" className="dark:fill-[#1f1142] dark:stroke-[#6b21a8]" strokeWidth="1" />
-                    <line x1="280" y1="115" x2="320" y2="115" stroke="#94a3b8" className="dark:stroke-[#3b136f]" strokeWidth="2" strokeLinecap="round" />
-                    <line x1="300" y1="95" x2="300" y2="135" stroke="#94a3b8" className="dark:stroke-[#3b136f]" strokeWidth="2" strokeLinecap="round" />
+                {/* Inside Room Perspective & HUD Guided Connector Lines */}
+                <div className="absolute inset-0 pointer-events-none">
+                  <svg className="w-full h-full" viewBox="0 0 600 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    {/* Background architectural grid traces */}
+                    <g className="opacity-30 dark:opacity-20">
+                      <line x1="0" y1="60" x2="600" y2="60" stroke="#94a3b8" className="dark:stroke-[#a855f7]" strokeWidth="0.8" />
+                      <line x1="120" y1="0" x2="200" y2="180" stroke="#94a3b8" className="dark:stroke-[#a855f7]" strokeWidth="0.6" strokeDasharray="3 3" />
+                      <line x1="480" y1="0" x2="400" y2="180" stroke="#94a3b8" className="dark:stroke-[#a855f7]" strokeWidth="0.6" strokeDasharray="3 3" />
+                      <circle cx="250" cy="80" r="14" fill="#e2e8f0" stroke="#94a3b8" className="dark:fill-[#1b0e36] dark:stroke-[#4c1d95]" strokeWidth="1.5" />
+                      <circle cx="350" cy="80" r="14" fill="#e2e8f0" stroke="#94a3b8" className="dark:fill-[#1b0e36] dark:stroke-[#4c1d95]" strokeWidth="1.5" />
+                      <rect x="420" y="70" width="70" height="24" rx="3" fill="#ffffff" stroke="#94a3b8" className="dark:fill-[#120824] dark:stroke-[#4c1d95]" strokeWidth="1" />
+                      <text x="455" y="86" fill="#64748b" className="dark:fill-[#6b7280]" fontSize="8" fontFamily="monospace" textAnchor="middle">HVAC [OFF]</text>
+                      <circle cx="300" cy="115" r="5" fill="#e2e8f0" stroke="#94a3b8" className="dark:fill-[#1f1142] dark:stroke-[#6b21a8]" strokeWidth="1" />
+                      <line x1="280" y1="115" x2="320" y2="115" stroke="#94a3b8" className="dark:stroke-[#3b136f]" strokeWidth="2" strokeLinecap="round" />
+                      <line x1="300" y1="95" x2="300" y2="135" stroke="#94a3b8" className="dark:stroke-[#3b136f]" strokeWidth="2" strokeLinecap="round" />
+                    </g>
+
+                    {/* HUD GUIDED CONNECTOR LINES (Desktop only, >= md) */}
+                    <g className="hidden md:inline">
+                      {/* 1. Top-Left: Deadbolt Lock Latch -> LOCKED Status Badge */}
+                      <path
+                        d="M160 270 L115 270 L115 52"
+                        className="stroke-emerald-500 dark:stroke-brand-green/80"
+                        strokeWidth="1.2"
+                        strokeDasharray="3 3"
+                        fill="none"
+                      />
+                      <circle cx="160" cy="270" r="2.5" className="fill-emerald-500 dark:fill-brand-green" />
+                      <circle cx="115" cy="52" r="3" className="fill-emerald-500 dark:fill-brand-green" />
+                      <circle cx="115" cy="52" r="6" className="stroke-emerald-400 dark:stroke-brand-green/50 fill-none" strokeWidth="0.8" />
+
+                      {/* 2. Top-Right: Vision Optic Header -> ROOM EMPTY Status Badge */}
+                      <path
+                        d="M440 28 L485 28 L485 52"
+                        className="stroke-cyan-500 dark:stroke-brand-cyan/80"
+                        strokeWidth="1.2"
+                        strokeDasharray="3 3"
+                        fill="none"
+                      />
+                      <circle cx="440" cy="28" r="2.5" className="fill-cyan-500 dark:fill-brand-cyan" />
+                      <circle cx="485" cy="52" r="3" className="fill-cyan-500 dark:fill-brand-cyan" />
+                      <circle cx="485" cy="52" r="6" className="stroke-cyan-400 dark:stroke-brand-cyan/50 fill-none" strokeWidth="0.8" />
+
+                      {/* 3. Bottom-Left: Egress/Cutoff Relay -> ENERGY SAVING Status Badge */}
+                      <path
+                        d="M160 375 L120 375 L120 345"
+                        className="stroke-emerald-500 dark:stroke-brand-green/80"
+                        strokeWidth="1.2"
+                        strokeDasharray="3 3"
+                        fill="none"
+                      />
+                      <circle cx="160" cy="375" r="2.5" className="fill-emerald-500 dark:fill-brand-green" />
+                      <circle cx="120" cy="345" r="3" className="fill-emerald-500 dark:fill-brand-green" />
+                      <circle cx="120" cy="345" r="6" className="stroke-emerald-400 dark:stroke-brand-green/50 fill-none" strokeWidth="0.8" />
+
+                      {/* 4. Bottom-Right: Biometric/Security Core -> MONITORING ACTIVE Status Badge */}
+                      <path
+                        d="M440 205 L495 205 L495 345"
+                        className="stroke-purple-500 dark:stroke-purple-400/80"
+                        strokeWidth="1.2"
+                        strokeDasharray="3 3"
+                        fill="none"
+                      />
+                      <circle cx="440" cy="205" r="2.5" className="fill-purple-500 dark:fill-purple-400" />
+                      <circle cx="495" cy="345" r="3" className="fill-purple-500 dark:fill-purple-400" />
+                      <circle cx="495" cy="345" r="6" className="stroke-purple-400 dark:stroke-purple-300/50 fill-none" strokeWidth="0.8" />
+                    </g>
                   </svg>
                 </div>
 
