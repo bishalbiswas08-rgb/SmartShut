@@ -89,7 +89,7 @@ export default function Navbar() {
             </a>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-1 rounded-full px-4 py-1.5 bg-[#120a24]/60 backdrop-blur-md border border-purple-500/20 shadow-inner">
+            <nav className="hidden md:flex items-center gap-0.5 lg:gap-1 rounded-full px-2 lg:px-4 py-1 lg:py-1.5 bg-[#120a24]/60 backdrop-blur-md border border-purple-500/20 shadow-inner">
               {navItems.map((item) => {
                 const isActive = activeSection === item.href.substring(1);
                 return (
@@ -97,7 +97,7 @@ export default function Navbar() {
                     key={item.name}
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
-                    className={`px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all ${
+                    className={`px-2.5 lg:px-4 py-1 lg:py-1.5 rounded-full text-[11px] lg:text-xs font-medium tracking-wide transition-all ${
                       isActive
                         ? "text-brand-green bg-purple-900/40 shadow-[0_0_12px_rgba(0,245,155,0.15)] border border-brand-green/30"
                         : "text-slate-300 hover:text-white hover:bg-white/5"
@@ -110,11 +110,11 @@ export default function Navbar() {
             </nav>
 
             {/* Right Action */}
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-2 lg:gap-3">
               <a
                 href="#demo"
                 onClick={(e) => handleNavClick(e, "#demo")}
-                className="group relative inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold tracking-wide text-black bg-gradient-to-r from-brand-green to-[#2bfdb0] hover:from-[#10e882] hover:to-brand-green transition-all shadow-[0_0_20px_rgba(0,245,155,0.35)] hover:shadow-[0_0_25px_rgba(0,245,155,0.55)] hover:scale-[1.02] active:scale-[0.98]"
+                className="group relative inline-flex items-center gap-1.5 lg:gap-2 px-3.5 lg:px-5 py-1.5 lg:py-2 rounded-full text-[11px] lg:text-xs font-semibold tracking-wide text-black bg-gradient-to-r from-brand-green to-[#2bfdb0] hover:from-[#10e882] hover:to-brand-green transition-all shadow-[0_0_20px_rgba(0,245,155,0.35)] hover:shadow-[0_0_25px_rgba(0,245,155,0.55)] hover:scale-[1.02] active:scale-[0.98]"
               >
                 <span>Explore Demo</span>
                 <Sparkles className="w-3.5 h-3.5 text-black group-hover:rotate-12 transition-transform" />

@@ -2,24 +2,31 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SmartShut — Lock Smart. Save Energy. Stay Secure.",
+  title: "SmartShut | Smart Access & Energy Management",
   description:
-    "A product concept showcase: One smart door combining authorized biometric access, camera-assisted occupancy estimation, and automatic non-essential energy shutdown.",
+    "Explore SmartShut, a smart door concept connecting authorized access, occupancy monitoring and intelligent energy management.",
   keywords: [
     "SmartShut",
-    "smart door",
+    "smart door concept",
     "energy management",
-    "smart lock",
-    "occupancy detection",
-    "biometric access",
-    "smart building concept",
+    "smart access control",
+    "room occupancy verification",
+    "biometric door lock",
+    "smart building technology",
   ],
-  authors: [{ name: "SmartShut Concept Team" }],
+  authors: [{ name: "SmartShut Concept" }],
   openGraph: {
-    title: "SmartShut — Lock Smart. Save Energy. Stay Secure.",
+    title: "SmartShut | Smart Access & Energy Management",
     description:
-      "One smart door connecting access, security, and automatic room energy management.",
+      "Explore SmartShut, a smart door concept connecting authorized access, occupancy monitoring and intelligent energy management.",
     type: "website",
+    siteName: "SmartShut Product Concept",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SmartShut | Smart Access & Energy Management",
+    description:
+      "Explore SmartShut, a smart door concept connecting authorized access, occupancy monitoring and intelligent energy management.",
   },
 };
 

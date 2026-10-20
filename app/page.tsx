@@ -17,12 +17,12 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#07040d] text-slate-100 flex flex-col selection:bg-brand-green/20 selection:text-white">
+    <div className="min-h-screen bg-[#07040d] text-slate-100 flex flex-col selection:bg-brand-green/20 selection:text-white overflow-x-hidden w-full max-w-full">
       {/* Sticky Glass Navbar */}
       <Navbar />
 
       {/* Main Product Showcase Flow */}
-      <main className="flex-grow">
+      <main className="flex-grow w-full max-w-full overflow-x-hidden">
         {/* Section 1: Hero */}
         <HeroSection />
 
