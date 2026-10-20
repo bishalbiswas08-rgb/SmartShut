@@ -9,44 +9,411 @@ import {
   Fan,
   Wind,
   Lock,
+  CheckCircle2,
   TrendingDown,
   Info,
 } from "lucide-react";
 
-interface ComparisonRoomFanProps {
-  status: "spinning" | "paused";
-  label: string;
+interface RoomData {
+  id: "ordinary" | "smartshut";
+  headerTitle: string;
+  headerBadge: string;
+  relationshipPill: string;
+  light: {
+    status: "ON" | "OFF";
+    watts: string;
+  };
+  ac: {
+    status: "HIGH" | "STANDBY";
+    detail: string;
+  };
+  fan: {
+    status: "RUNNING" | "PAUSED";
+    speed: string;
+  };
+  door: {
+    status: string;
+    sub: string;
+  };
+  circuit: {
+    status: string;
+    sub: string;
+  };
+  indicators: Array<{
+    label: string;
+    value: string;
+  }>;
+  consequences: string[];
+  bottomMetric: {
+    left: string;
+    right: string;
+  };
 }
 
-function ComparisonRoomFan({ status, label }: ComparisonRoomFanProps) {
-  const isSpinning = status === "spinning";
+const ordinaryRoomData: RoomData = {
+  id: "ordinary",
+  headerTitle: "ORDINARY ROOM",
+  headerBadge: "ENERGY WASTE",
+  relationshipPill: "LOCKED ≠ EMPTY",
+  light: {
+    status: "ON",
+    watts: "100W Active",
+  },
+  ac: {
+    status: "HIGH",
+    detail: "Cooling Empty Space",
+  },
+  fan: {
+    status: "RUNNING",
+    speed: "Full RPM",
+  },
+  door: {
+    status: "DOOR LOCKED",
+    sub: "Perimeter Sealed",
+  },
+  circuit: {
+    status: "CIRCUITS ENERGIZED",
+    sub: "100% Baseline Draw",
+  },
+  indicators: [
+    { label: "LIGHT", value: "ON (100W)" },
+    { label: "FAN", value: "RUNNING" },
+    { label: "AC", value: "HIGH DRAW" },
+    { label: "CIRCUITS", value: "100% HOT" },
+  ],
+  consequences: [
+    "Door locked, but circuits remain energized.",
+    "HVAC and lighting continue running.",
+    "Energy waste accumulates while the room is empty.",
+  ],
+  bottomMetric: {
+    left: "UNMANAGED LOAD",
+    right: "100% BASELINE",
+  },
+};
+
+const smartShutRoomData: RoomData = {
+  id: "smartshut",
+  headerTitle: "SMARTSHUT ROOM",
+  headerBadge: "SMART ENERGY CONTROL",
+  relationshipPill: "LOCKED + EMPTY → ENERGY SAVE",
+  light: {
+    status: "OFF",
+    watts: "0W Zero Drain",
+  },
+  ac: {
+    status: "STANDBY",
+    detail: "Compressor Cutoff",
+  },
+  fan: {
+    status: "PAUSED",
+    speed: "Relay Isolated",
+  },
+  door: {
+    status: "LOCKED + VERIFIED",
+    sub: "Sensors Confirmed Empty",
+  },
+  circuit: {
+    status: "SECURITY ACTIVE",
+    sub: "Non-Essential Isolated",
+  },
+  indicators: [
+    { label: "LIGHT", value: "OFF (0W)" },
+    { label: "FAN", value: "PAUSED" },
+    { label: "HVAC", value: "STANDBY" },
+    { label: "SECURITY", value: "ACTIVE 24/7" },
+  ],
+  consequences: [
+    "Door verifies the room is empty before power reduction.",
+    "Non-essential loads enter safe low-power mode.",
+    "Security and monitoring remain active.",
+  ],
+  bottomMetric: {
+    left: "ACTIVE REDUCTION",
+    right: "NON-ESSENTIAL LOAD ISOLATED",
+  },
+};
+
+// Reusable Room Illustration with IDENTICAL geometry for both cards
+function RoomIllustration({ data }: { data: RoomData }) {
+  const isSmartShut = data.id === "smartshut";
+
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none z-10">
+    <div
+      className={`relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-xl p-3 sm:p-4 flex flex-col justify-between overflow-hidden border transition-all ${
+        isSmartShut
+          ? "bg-[#F0FDF4] dark:bg-[#050e0f] border-emerald-300 dark:border-brand-green/30"
+          : "bg-[#FFF5F5] dark:bg-[#0e040f] border-rose-300 dark:border-red-500/25"
+      }`}
+    >
+      {/* Subtle interior lighting wash */}
       <div
-        className={`w-11 h-11 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-colors ${
-          isSpinning
-            ? "bg-white dark:bg-[#1e0a16] border border-amber-400/50 dark:border-amber-500/40 shadow-sm dark:shadow-inner"
-            : "bg-slate-100 dark:bg-[#081716] border border-emerald-200 dark:border-brand-green/30"
+        className={`absolute inset-0 pointer-events-none opacity-40 ${
+          isSmartShut
+            ? "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-500/10 via-brand-cyan/5 to-transparent"
+            : "bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-500/15 via-rose-950/10 to-transparent"
         }`}
-      >
-        <Fan
-          className={`w-6 h-6 sm:w-8 sm:h-8 ${
-            isSpinning
-              ? "text-amber-500 dark:text-amber-400 animate-spin"
-              : "text-slate-400 dark:text-slate-500"
-          }`}
-          style={{ animationDuration: isSpinning ? "1s" : "0s" }}
-        />
+      />
+
+      {/* TOP ROW: LIGHT (LEFT) and AC (RIGHT) */}
+      <div className="relative z-10 flex items-start justify-between w-full">
+        {/* LIGHT */}
+        <div className="flex items-center gap-2">
+          <div
+            className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition-all ${
+              data.light.status === "ON"
+                ? "bg-amber-100 dark:bg-amber-950/60 border border-amber-400 text-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.4)]"
+                : "bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-400 opacity-60"
+            }`}
+          >
+            <Lightbulb
+              className={`w-4 h-4 sm:w-5 sm:h-5 ${
+                data.light.status === "ON" ? "animate-pulse" : ""
+              }`}
+            />
+          </div>
+          <div>
+            <span
+              className={`text-[10px] sm:text-xs font-mono font-bold block ${
+                data.light.status === "ON"
+                  ? "text-amber-700 dark:text-amber-400"
+                  : "text-slate-500 dark:text-slate-400"
+              }`}
+            >
+              LIGHT: {data.light.status}
+            </span>
+            <span className="text-[8px] sm:text-[9px] font-mono text-[#626775] dark:text-slate-400 block">
+              {data.light.watts}
+            </span>
+          </div>
+        </div>
+
+        {/* AC / CLIMATE */}
+        <div className="flex items-center gap-2 text-right flex-row-reverse">
+          <div
+            className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition-all ${
+              data.ac.status === "HIGH"
+                ? "bg-white dark:bg-[#220d18] border border-rose-300 dark:border-amber-500/40 text-cyan-500 shadow-sm"
+                : "bg-white dark:bg-[#071a17] border border-emerald-300 dark:border-brand-green/40 text-emerald-600 dark:text-brand-green shadow-sm"
+            }`}
+          >
+            <Wind
+              className={`w-4 h-4 sm:w-5 sm:h-5 ${
+                data.ac.status === "HIGH" ? "animate-bounce" : ""
+              }`}
+            />
+          </div>
+          <div>
+            <span
+              className={`text-[10px] sm:text-xs font-mono font-bold block ${
+                data.ac.status === "HIGH"
+                  ? "text-[#111218] dark:text-white"
+                  : "text-emerald-800 dark:text-brand-green"
+              }`}
+            >
+              AC: {data.ac.status}
+            </span>
+            <span className="text-[8px] sm:text-[9px] font-mono text-[#626775] dark:text-slate-400 block">
+              {data.ac.detail}
+            </span>
+          </div>
+        </div>
       </div>
-      <div className="h-4 sm:h-5 flex items-center justify-center mt-1">
-        <span
-          className={`text-[9px] sm:text-[10px] font-mono font-semibold whitespace-nowrap ${
-            isSpinning
-              ? "text-amber-600 dark:text-amber-300"
-              : "text-emerald-700 dark:text-brand-green"
+
+      {/* CENTER ROW: CEILING FAN */}
+      <div className="relative z-10 flex flex-col items-center justify-center my-auto">
+        <div
+          className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all shadow-sm ${
+            data.fan.status === "RUNNING"
+              ? "bg-white dark:bg-[#1e0a16] border border-amber-400 dark:border-amber-500/50 text-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.25)]"
+              : "bg-white dark:bg-[#081816] border border-emerald-300 dark:border-brand-green/40 text-slate-400 dark:text-slate-500"
           }`}
         >
-          {label}
+          <Fan
+            className={`w-6 h-6 sm:w-7 sm:h-7 ${
+              data.fan.status === "RUNNING"
+                ? "animate-spin text-amber-500"
+                : "text-slate-400 dark:text-slate-500"
+            }`}
+            style={{ animationDuration: data.fan.status === "RUNNING" ? "1s" : "0s" }}
+          />
+        </div>
+        <div className="text-center mt-1">
+          <span
+            className={`text-[9px] sm:text-[10px] font-mono font-bold block ${
+              data.fan.status === "RUNNING"
+                ? "text-amber-700 dark:text-amber-400"
+                : "text-emerald-700 dark:text-brand-green"
+            }`}
+          >
+            FAN: {data.fan.status}
+          </span>
+          <span className="text-[8px] sm:text-[9px] font-mono text-[#626775] dark:text-slate-400 block">
+            {data.fan.speed}
+          </span>
+        </div>
+      </div>
+
+      {/* BOTTOM ROW: DOOR & LOAD THRESHOLD */}
+      <div className="relative z-10 pt-2 border-t border-slate-200/80 dark:border-purple-500/20 flex items-center justify-between w-full">
+        {/* Door Status */}
+        <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/95 dark:bg-black/70 border border-slate-200 dark:border-slate-800 shadow-sm">
+          {isSmartShut ? (
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-brand-green flex-shrink-0" />
+          ) : (
+            <Lock className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 flex-shrink-0" />
+          )}
+          <span className="text-[9px] sm:text-[10px] font-mono font-semibold text-[#111218] dark:text-slate-200 truncate">
+            {data.door.status}
+          </span>
+        </div>
+
+        {/* Circuit / Security Status */}
+        <div
+          className={`flex items-center gap-1.5 px-2 py-1 rounded-md shadow-sm border ${
+            isSmartShut
+              ? "bg-emerald-50 dark:bg-brand-green/15 border-emerald-300 dark:border-brand-green/40 text-emerald-800 dark:text-brand-green"
+              : "bg-rose-50 dark:bg-red-950/60 border-rose-300 dark:border-red-500/30 text-rose-800 dark:text-red-400"
+          }`}
+        >
+          {isSmartShut ? (
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-brand-green flex-shrink-0" />
+          ) : (
+            <Zap className="w-3.5 h-3.5 text-amber-500 animate-pulse flex-shrink-0" />
+          )}
+          <span className="text-[9px] sm:text-[10px] font-mono font-bold truncate">
+            {data.circuit.status}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Reusable Room Card Structure (Identical DOM, identical geometry, identical padding)
+function RoomCard({ data }: { data: RoomData }) {
+  const isSmartShut = data.id === "smartshut";
+
+  return (
+    <div
+      className={`relative rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 backdrop-blur-xl flex flex-col justify-between border shadow-lg dark:shadow-2xl overflow-hidden group transition-all ${
+        isSmartShut
+          ? "bg-gradient-to-b from-white via-emerald-50/40 to-cyan-50/30 dark:bg-gradient-to-b dark:from-[#0c1c1f]/80 dark:via-[#0a151b]/90 dark:to-[#070c14] border-emerald-300 dark:border-brand-green/40"
+          : "bg-gradient-to-b from-white via-rose-50/40 to-amber-50/30 dark:bg-gradient-to-b dark:from-[#1b0d1e]/80 dark:via-[#130717]/90 dark:to-[#0c0310] border-rose-300 dark:border-red-500/30"
+      }`}
+    >
+      {/* Background ambient corner glow */}
+      <div
+        className={`absolute top-0 ${isSmartShut ? "right-0" : "left-0"} w-36 h-36 blur-2xl pointer-events-none ${
+          isSmartShut ? "bg-emerald-500/10 dark:bg-brand-green/10" : "bg-amber-500/10"
+        }`}
+      />
+
+      <div className="relative z-10">
+        {/* 1. ROOM HEADER */}
+        <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-200 dark:border-purple-500/20 min-h-[48px]">
+          <div className="flex items-center gap-2">
+            <span
+              className={`w-2 h-2 rounded-full ${
+                isSmartShut ? "bg-emerald-500 dark:bg-brand-green" : "bg-red-500"
+              } animate-ping`}
+            />
+            <span
+              className={`text-xs sm:text-sm font-mono font-bold tracking-wider uppercase ${
+                isSmartShut
+                  ? "text-emerald-800 dark:text-brand-green"
+                  : "text-rose-700 dark:text-red-400"
+              }`}
+            >
+              {data.headerTitle}
+            </span>
+          </div>
+          <span
+            className={`px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-mono font-semibold border ${
+              isSmartShut
+                ? "bg-emerald-100 dark:bg-brand-green/15 text-emerald-800 dark:text-brand-green border-emerald-300 dark:border-brand-green/30"
+                : "bg-rose-100 dark:bg-red-500/15 text-rose-800 dark:text-red-400 border-rose-300 dark:border-red-500/30"
+            }`}
+          >
+            {data.headerBadge}
+          </span>
+        </div>
+
+        {/* Subtle Visual Relationship Pill */}
+        <div className="my-2.5 flex items-center justify-between">
+          <span className="text-[10px] font-mono text-[#626775] dark:text-slate-400">
+            Concept Logic:
+          </span>
+          <span
+            className={`text-[10px] font-mono px-2 py-0.5 rounded border font-semibold ${
+              isSmartShut
+                ? "bg-emerald-50 dark:bg-brand-green/10 text-emerald-700 dark:text-brand-green border-emerald-300/80 dark:border-brand-green/30"
+                : "bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-400 border-amber-300/80 dark:border-amber-500/30"
+            }`}
+          >
+            {data.relationshipPill}
+          </span>
+        </div>
+
+        {/* 2. ROOM ILLUSTRATION (Shared Geometry) */}
+        <div className="my-3">
+          <RoomIllustration data={data} />
+        </div>
+
+        {/* 3. 4 COMPACT STATUS INDICATORS */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 my-3">
+          {data.indicators.map((ind, i) => (
+            <div
+              key={i}
+              className={`p-2 rounded-lg border text-center flex flex-col justify-center min-h-[50px] ${
+                isSmartShut
+                  ? "bg-white/90 dark:bg-[#071617]/80 border-emerald-200 dark:border-brand-green/20"
+                  : "bg-white/90 dark:bg-[#1a0b18]/80 border-rose-200 dark:border-red-500/20"
+              }`}
+            >
+              <span className="text-[8px] sm:text-[9px] font-mono text-[#626775] dark:text-slate-400 block uppercase">
+                {ind.label}
+              </span>
+              <span
+                className={`text-[9px] sm:text-[10px] font-mono font-bold truncate ${
+                  isSmartShut
+                    ? "text-emerald-800 dark:text-brand-green"
+                    : "text-rose-700 dark:text-red-400"
+                }`}
+              >
+                {ind.value}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* 4. SHORT EXPLANATION (3 Concise Points) */}
+        <ul className="mt-4 space-y-2 text-xs sm:text-sm text-[#4b5262] dark:text-slate-300 font-normal">
+          {data.consequences.map((text, i) => (
+            <li key={i} className="flex items-start gap-2">
+              <span
+                className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${
+                  isSmartShut ? "bg-emerald-500 dark:bg-brand-green" : "bg-rose-500 dark:bg-red-400"
+                }`}
+              />
+              <span>{text}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* 5. BOTTOM RESULT */}
+      <div
+        className={`mt-5 pt-3.5 border-t flex items-center justify-between text-[11px] sm:text-xs font-mono font-semibold ${
+          isSmartShut
+            ? "border-emerald-200 dark:border-brand-green/20 text-emerald-800 dark:text-brand-green"
+            : "border-rose-200 dark:border-red-500/15 text-rose-700 dark:text-red-400"
+        }`}
+      >
+        <span>{data.bottomMetric.left}</span>
+        <span className="font-bold flex items-center gap-1">
+          {isSmartShut ? <TrendingDown className="w-3.5 h-3.5" /> : <Zap className="w-3.5 h-3.5" />}
+          {data.bottomMetric.right}
         </span>
       </div>
     </div>
@@ -61,8 +428,8 @@ export default function ProblemSection() {
       <div className="absolute top-1/2 right-0 w-[280px] sm:w-[400px] h-[400px] max-w-full bg-emerald-500/10 dark:bg-brand-green/10 blur-[120px] sm:blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        {/* Section Header with generous breathing room */}
+        <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-18">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 dark:bg-purple-950/70 border border-amber-200 dark:border-purple-500/30 backdrop-blur-md mb-4 shadow-sm">
             <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
             <span className="text-[11px] sm:text-xs font-mono font-semibold text-amber-900 dark:text-purple-200 uppercase tracking-wider">
@@ -81,173 +448,20 @@ export default function ProblemSection() {
           </p>
         </div>
 
-        {/* Comparison Showcase (Side by Side Architectural Render) */}
+        {/* Rebuilt Architectural Comparison Showcase (Side by Side Shared Grid) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-stretch">
           {/* LEFT: ORDINARY ROOM */}
-          <div className="relative rounded-2xl p-4 sm:p-6 lg:p-8 bg-gradient-to-b from-white via-rose-50/40 to-amber-50/30 dark:bg-gradient-to-b dark:from-[#1b0d1e]/80 dark:via-[#130717]/90 dark:to-[#0c0310] border border-rose-200 dark:border-red-500/30 shadow-lg dark:shadow-2xl backdrop-blur-xl flex flex-col justify-between group overflow-hidden">
-            <div className="absolute top-0 left-0 w-36 h-36 bg-amber-500/10 blur-2xl pointer-events-none" />
-
-            <div>
-              {/* Header Label */}
-              <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-rose-200 dark:border-red-500/20 min-h-[44px]">
-                <div className="flex items-center gap-2 sm:gap-2.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
-                  <span className="text-xs sm:text-sm font-mono font-bold tracking-wider text-rose-700 dark:text-red-400 uppercase">
-                    ORDINARY ROOM
-                  </span>
-                </div>
-                <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono font-semibold bg-rose-100 dark:bg-red-500/15 text-rose-800 dark:text-red-400 border border-rose-300 dark:border-red-500/30">
-                  ENERGY WASTE
-                </span>
-              </div>
-
-              {/* Architectural Cutaway Illustration: Ordinary Room */}
-              <div className="mt-5 sm:mt-6 relative w-full h-60 sm:h-64 rounded-xl bg-[#FFF5F5] dark:bg-[#0e040f] border border-rose-200 dark:border-red-500/20 overflow-hidden p-3 sm:p-4">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-red-950/5 dark:via-red-950/10 to-transparent" />
-
-                {/* Ceiling Lights (Blaring ON) */}
-                <div className="absolute top-3 left-3 sm:top-4 sm:left-1/4 sm:-translate-x-1/2 flex flex-col items-center">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-amber-400/20 border border-amber-400/60 flex items-center justify-center shadow-[0_0_20px_rgba(251,191,36,0.6)]">
-                    <Lightbulb className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 dark:text-amber-300 animate-pulse" />
-                  </div>
-                  <span className="text-[9px] sm:text-[10px] font-mono text-amber-600 dark:text-amber-300 mt-1 font-semibold">Light (ON)</span>
-                </div>
-
-                {/* AC Unit (Blasting ON) */}
-                <div className="absolute top-3 right-3 sm:top-4 sm:right-6 flex flex-col items-end">
-                  <div className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-white dark:bg-[#250d18] border border-rose-300 dark:border-amber-500/40 flex items-center gap-1.5 shadow-[0_0_15px_rgba(239,68,68,0.15)] dark:shadow-[0_0_15px_rgba(239,68,68,0.25)]">
-                    <Wind className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400 animate-bounce" />
-                    <span className="text-[10px] sm:text-[11px] font-mono text-[#111218] dark:text-white font-bold">AC [HIGH]</span>
-                  </div>
-                  <span className="text-[8px] sm:text-[9px] font-mono text-rose-600 dark:text-red-400 mt-0.5 font-medium">Cooling empty space</span>
-                </div>
-
-                {/* Ceiling Fan (Aligned Shared Component) */}
-                <ComparisonRoomFan status="spinning" label="Fan max speed" />
-
-                {/* Bottom Bar: Lock and Waste meter */}
-                <div className="absolute bottom-2.5 sm:bottom-4 inset-x-2.5 sm:inset-x-4 flex items-center justify-between gap-1.5 pointer-events-none">
-                  <div className="flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 rounded-md bg-white/95 dark:bg-black/80 border border-slate-300 dark:border-slate-700 shadow-sm">
-                    <Lock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-500 dark:text-slate-400 flex-shrink-0" />
-                    <span className="text-[9px] sm:text-[10px] font-mono text-[#111218] dark:text-slate-300 font-medium">Deadbolt Locked</span>
-                  </div>
-                  <div className="flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 rounded-md bg-rose-100 dark:bg-red-950/90 border border-rose-300 dark:border-red-500/40 shadow-sm">
-                    <Zap className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-500 dark:text-amber-400 animate-pulse flex-shrink-0" />
-                    <span className="text-[9px] sm:text-xs font-mono font-bold text-rose-800 dark:text-red-300 truncate">Idle Draw (Demo)</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bullet Points */}
-              <ul className="mt-5 sm:mt-6 space-y-2.5 sm:space-y-3 text-xs sm:text-sm text-[#4b5262] dark:text-slate-300 font-normal">
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 dark:bg-red-400 mt-1.5 flex-shrink-0" />
-                  <span>Door is locked from outside, but internal circuits remain continuously energized.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 dark:bg-red-400 mt-1.5 flex-shrink-0" />
-                  <span>HVAC and lighting systems lack coordination with physical door state.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 dark:bg-red-400 mt-1.5 flex-shrink-0" />
-                  <span>Substantial electrical waste accumulates overnight and across weekends.</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="mt-5 sm:mt-6 pt-3 sm:pt-4 border-t border-rose-200 dark:border-red-500/15 flex items-center justify-between text-[11px] sm:text-xs font-mono text-rose-700 dark:text-red-400/90 font-semibold">
-              <span>UNMANAGED DRAIN</span>
-              <span className="font-bold">100% BASELINE LOAD</span>
-            </div>
-          </div>
+          <RoomCard data={ordinaryRoomData} />
 
           {/* RIGHT: SMARTSHUT ROOM */}
-          <div className="relative rounded-2xl p-4 sm:p-6 lg:p-8 bg-gradient-to-b from-white via-emerald-50/40 to-cyan-50/30 dark:bg-gradient-to-b dark:from-[#0c1c1f]/80 dark:via-[#0a151b]/90 dark:to-[#070c14] border border-emerald-300 dark:border-brand-green/40 shadow-lg dark:shadow-2xl backdrop-blur-xl flex flex-col justify-between group overflow-hidden">
-            <div className="absolute top-0 right-0 w-36 h-36 bg-emerald-500/10 dark:bg-brand-green/10 blur-2xl pointer-events-none" />
-
-            <div>
-              {/* Header Label */}
-              <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-emerald-200 dark:border-brand-green/20 min-h-[44px]">
-                <div className="flex items-center gap-2 sm:gap-2.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 dark:bg-brand-green animate-ping" />
-                  <span className="text-xs sm:text-sm font-mono font-bold tracking-wider text-emerald-800 dark:text-brand-green uppercase">
-                    SMARTSHUT ROOM
-                  </span>
-                </div>
-                <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono font-semibold bg-emerald-100 dark:bg-brand-green/15 text-emerald-800 dark:text-brand-green border border-emerald-300 dark:border-brand-green/30">
-                  SMART ENERGY CONTROL
-                </span>
-              </div>
-
-              {/* Architectural Cutaway Illustration: SmartShut Room */}
-              <div className="mt-5 sm:mt-6 relative w-full h-60 sm:h-64 rounded-xl bg-[#F0FDF4] dark:bg-[#050e0f] border border-emerald-200 dark:border-brand-green/30 overflow-hidden p-3 sm:p-4">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-500/10 via-cyan-500/5 dark:from-brand-green/5 dark:via-brand-cyan/5 to-transparent" />
-
-                {/* Ceiling Lights (OFF) */}
-                <div className="absolute top-3 left-3 sm:top-4 sm:left-1/4 sm:-translate-x-1/2 flex flex-col items-center opacity-60 dark:opacity-40">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 flex items-center justify-center">
-                    <Lightbulb className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 dark:text-slate-500" />
-                  </div>
-                  <span className="text-[9px] sm:text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-1 font-medium">Light (OFF)</span>
-                </div>
-
-                {/* AC Unit (STANDBY / OFF) */}
-                <div className="absolute top-3 right-3 sm:top-4 sm:right-6 flex flex-col items-end">
-                  <div className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-white dark:bg-[#071a17] border border-emerald-300 dark:border-brand-green/40 flex items-center gap-1.5 shadow-sm">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-brand-green" />
-                    <span className="text-[10px] sm:text-[11px] font-mono text-emerald-800 dark:text-brand-green font-bold">HVAC [STANDBY]</span>
-                  </div>
-                  <span className="text-[8px] sm:text-[9px] font-mono text-[#626775] dark:text-slate-400 mt-0.5">Non-essential cutoff</span>
-                </div>
-
-                {/* Ceiling Fan (Aligned Shared Component) */}
-                <ComparisonRoomFan status="paused" label="Fan Paused" />
-
-                {/* Bottom Bar: Security Field and Power Load Meter */}
-                <div className="absolute bottom-2.5 sm:bottom-4 inset-x-2.5 sm:inset-x-4 flex items-center justify-between gap-1.5 pointer-events-none">
-                  <div className="flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 rounded-md bg-white/95 dark:bg-[#0a231f]/95 border border-emerald-400 dark:border-brand-green/50 shadow-sm dark:shadow-[0_0_12px_rgba(0,245,155,0.25)]">
-                    <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600 dark:text-brand-green flex-shrink-0" />
-                    <span className="text-[9px] sm:text-[10px] font-mono text-[#111218] dark:text-white font-semibold">Security Active</span>
-                  </div>
-                  <div className="flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 rounded-md bg-emerald-100 dark:bg-brand-green/15 border border-emerald-400 dark:border-brand-green/50 shadow-sm">
-                    <TrendingDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-700 dark:text-brand-green flex-shrink-0" />
-                    <span className="text-[9px] sm:text-xs font-mono font-bold text-emerald-900 dark:text-brand-green truncate">Standby (Demo)</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bullet Points */}
-              <ul className="mt-5 sm:mt-6 space-y-2.5 sm:space-y-3 text-xs sm:text-sm text-[#4b5262] dark:text-slate-300 font-normal">
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-brand-green mt-1.5 flex-shrink-0" />
-                  <span>Door confirms room is empty and locked before triggering power down.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-brand-green mt-1.5 flex-shrink-0" />
-                  <span>Connected lights, fans, and ACs gracefully switch to safe low-power sleep.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-brand-green mt-1.5 flex-shrink-0" />
-                  <span>Camera-assisted surveillance and safety circuits remain permanently online.</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="mt-5 sm:mt-6 pt-3 sm:pt-4 border-t border-emerald-200 dark:border-brand-green/20 flex items-center justify-between text-[11px] sm:text-xs font-mono text-emerald-800 dark:text-brand-green font-semibold">
-              <span>ACTIVE REDUCTION</span>
-              <span className="font-bold flex items-center gap-1">
-                <Zap className="w-3.5 h-3.5" />
-                ISOLATED NON-ESSENTIAL LOAD
-              </span>
-            </div>
-          </div>
+          <RoomCard data={smartShutRoomData} />
         </div>
 
-        {/* Note on Concept / Demo Data */}
+        {/* Technical Footnote */}
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-2 text-center text-[11px] sm:text-xs font-mono text-[#626775] dark:text-slate-400 max-w-3xl mx-auto">
           <Info className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" />
           <span>
-            Illustrative demo data. Device cutoff requires compatible connected relays or smart circuit switches. Security monitoring, smoke detection, and emergency manual exit remain permanently active.
+            Illustrative demo concept. Device cutoff requires connected relays or smart circuit switches. Security surveillance and emergency manual egress remain permanently operational.
           </span>
         </div>
       </div>

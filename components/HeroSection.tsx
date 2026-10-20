@@ -9,11 +9,11 @@ import {
   Eye,
   Fingerprint,
   ArrowRight,
+  Sparkles,
 } from "lucide-react";
 
 export default function HeroSection() {
   const [doorLocked, setDoorLocked] = useState(true);
-  const [hoveredComponent, setHoveredComponent] = useState<string | null>(null);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 sm:pt-24 pb-12 sm:pb-16 overflow-hidden bg-grid-pattern">
@@ -97,344 +97,191 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right Column: CINEMATIC HERO ILLUSTRATION */}
+          {/* Right Column: REBUILT HERO INTERACTIVE DOOR VISUAL */}
           <div className="lg:col-span-6 relative w-full">
-            {/* Interactive Concept Banner */}
-            <div className="flex justify-end mb-2.5 md:mb-0 md:absolute md:-top-6 md:right-6 z-20">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 dark:bg-[#170c2d]/90 border border-emerald-400/60 dark:border-brand-green/30 backdrop-blur-md shadow-md dark:shadow-lg">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-brand-green animate-ping" />
-                <span className="text-[10px] sm:text-[11px] font-mono text-emerald-800 dark:text-brand-green font-semibold tracking-wider">
-                  SMARTSHUT — PRODUCT CONCEPT
+            <div className="relative w-full rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 bg-white dark:bg-gradient-to-b dark:from-[#180d33]/90 dark:via-[#110724]/95 dark:to-[#090314] border border-[#D9DCE5] dark:border-purple-500/30 shadow-xl dark:shadow-2xl backdrop-blur-xl flex flex-col justify-between overflow-hidden">
+              {/* Subtle background tech texture */}
+              <div className="absolute inset-0 bg-dot-pattern opacity-25 pointer-events-none" />
+
+              {/* 1. TOP: Clean single header */}
+              <div className="relative z-10 flex items-center justify-between pb-3 sm:pb-4 border-b border-[#D9DCE5] dark:border-purple-500/20">
+                <div className="inline-flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-brand-green animate-pulse" />
+                  <span className="text-[11px] sm:text-xs font-mono font-bold tracking-wider text-emerald-800 dark:text-brand-green uppercase">
+                    SMARTSHUT • PRODUCT CONCEPT
+                  </span>
+                </div>
+                <span className="text-[10px] sm:text-[11px] font-mono text-[#626775] dark:text-purple-300/70 font-semibold">
+                  DOOR SYSTEM V1
                 </span>
               </div>
-            </div>
 
-            {/* Main Showcase Stage */}
-            <div className="relative w-full rounded-2xl sm:rounded-3xl p-3 sm:p-5 md:p-7 bg-gradient-to-b from-white via-[#F7F8FA] to-[#EDF0F7] dark:bg-gradient-to-b dark:from-[#190d36]/70 dark:via-[#100724]/80 dark:to-[#070311]/90 border border-[#D9DCE5] dark:border-purple-500/25 shadow-xl dark:shadow-2xl backdrop-blur-xl overflow-hidden group">
-              {/* Subtle architectural grid lines */}
-              <div className="absolute inset-0 bg-dot-pattern opacity-30 pointer-events-none" />
+              {/* 2. THE DOOR: Central Visual Focus (Unobstructed, zero covering cards) */}
+              <div className="relative z-10 my-3 sm:my-5 flex items-center justify-center">
+                <div
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`SmartShut Door illustration. Click to toggle state. Currently ${doorLocked ? "Locked" : "Unlocked"}`}
+                  onClick={() => setDoorLocked(!doorLocked)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setDoorLocked(!doorLocked);
+                    }
+                  }}
+                  className="relative cursor-pointer transition-transform hover:scale-[1.01] active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-brand-green/50 rounded-2xl p-1.5"
+                >
+                  {/* Outer Door Frame / Architectural Jamb */}
+                  <div className="w-[210px] sm:w-[250px] md:w-[270px] h-[300px] sm:h-[340px] md:h-[360px] rounded-2xl bg-[#E2E8F0] dark:bg-[#130726] p-2.5 sm:p-3 border-2 border-slate-300 dark:border-purple-500/40 shadow-xl dark:shadow-[0_15px_40px_rgba(0,0,0,0.8)] flex flex-col justify-between relative overflow-hidden">
+                    {/* Left Frame Hinges */}
+                    <div className="absolute left-0.5 top-10 w-1.5 h-6 rounded-r bg-slate-400 dark:bg-purple-400/60" />
+                    <div className="absolute left-0.5 top-1/2 -translate-y-1/2 w-1.5 h-6 rounded-r bg-slate-400 dark:bg-purple-400/60" />
+                    <div className="absolute left-0.5 bottom-10 w-1.5 h-6 rounded-r bg-slate-400 dark:bg-purple-400/60" />
 
-              {/* MOBILE TOP STATUS ROW (<= md) */}
-              <div className="flex md:hidden items-center justify-between gap-2 mb-2.5 z-20 relative w-full">
-                {/* 1. Top Left: LOCKED */}
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/95 dark:bg-[#140a2b]/90 border border-emerald-400/60 dark:border-brand-green/40 backdrop-blur-md shadow-sm">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-brand-green animate-ping" />
-                  <Lock className="w-3 h-3 text-emerald-600 dark:text-brand-green" />
-                  <span className="text-[10px] font-mono font-bold text-[#111218] dark:text-white tracking-wider">
-                    {doorLocked ? "LOCKED" : "UNLOCKED"}
-                  </span>
-                </div>
+                    {/* Right Strike Plate Mortise */}
+                    <div className="absolute right-0.5 top-1/2 -translate-y-1/2 w-1.5 h-14 rounded-l bg-slate-400 dark:bg-purple-400/60 flex items-center justify-center">
+                      <div className={`w-1 h-6 rounded-l transition-colors ${doorLocked ? "bg-emerald-500 dark:bg-brand-green" : "bg-slate-700 dark:bg-black"}`} />
+                    </div>
 
-                {/* 2. Top Right: ROOM EMPTY */}
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/95 dark:bg-[#140a2b]/90 border border-cyan-400/60 dark:border-brand-cyan/40 backdrop-blur-md shadow-sm">
-                  <Eye className="w-3 h-3 text-cyan-600 dark:text-brand-cyan" />
-                  <span className="text-[10px] font-mono font-bold text-cyan-800 dark:text-brand-cyan tracking-wider">
-                    ROOM EMPTY
-                  </span>
-                  <span className="text-[9px] font-mono text-[#626775] dark:text-slate-400">(VERIFIED)</span>
+                    {/* Door Slab Surface */}
+                    <div className="relative flex-1 rounded-xl bg-gradient-to-b from-white via-[#F8FAFC] to-[#EDF2F7] dark:bg-gradient-to-b dark:from-[#180a33] dark:via-[#100624] dark:to-[#070212] border border-slate-200 dark:border-purple-600/30 p-3 sm:p-3.5 flex flex-col justify-between overflow-hidden shadow-inner">
+                      {/* Subtle Internal Circuit Traces */}
+                      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-25 dark:opacity-20" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="20" y1="0" x2="20" y2="100%" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" className="text-purple-400" />
+                        <line x1="80%" y1="0" x2="80%" y2="100%" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" className="text-purple-400" />
+                        <path d="M20 50 H50 V140 H80%" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" className="text-emerald-400" />
+                      </svg>
+
+                      {/* Vision Sensor (Top Lintel Module) */}
+                      <div className="relative z-10 w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-white/95 dark:bg-[#0c051a]/90 border border-slate-200 dark:border-purple-500/30 shadow-sm">
+                        <div className="flex items-center gap-1.5">
+                          <div className="relative w-3.5 h-3.5 rounded-full bg-slate-900 border border-brand-cyan/80 flex items-center justify-center">
+                            <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse" />
+                          </div>
+                          <span className="text-[8px] sm:text-[9px] font-mono font-bold text-[#111218] dark:text-slate-300">
+                            VISION OPTIC
+                          </span>
+                        </div>
+                        <span className="text-[7px] sm:text-[8px] font-mono px-1.5 py-0.5 rounded bg-cyan-50 dark:bg-brand-cyan/15 text-cyan-800 dark:text-brand-cyan border border-cyan-300 dark:border-brand-cyan/30 font-semibold">
+                          ACTIVE
+                        </span>
+                      </div>
+
+                      {/* Ergonomic Biometric Fingerprint Sensor (Center) */}
+                      <div className="relative z-10 my-auto py-2 flex flex-col items-center">
+                        <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white dark:bg-[#120726] border-2 border-emerald-400/80 dark:border-brand-green/60 flex items-center justify-center shadow-[0_0_20px_rgba(0,245,155,0.2)] overflow-hidden group">
+                          {/* Laser Scan Line */}
+                          <div className="absolute inset-x-0 h-0.5 bg-emerald-400 dark:bg-brand-green shadow-[0_0_8px_#00f59b] animate-scan-line" />
+                          <Fingerprint className="w-8 h-8 sm:w-9 sm:h-9 text-emerald-600 dark:text-brand-green" />
+                        </div>
+                        <div className="mt-1.5 text-center">
+                          <span className="text-[8px] sm:text-[9px] font-mono font-bold text-emerald-800 dark:text-brand-green block tracking-wider">
+                            FINGERPRINT SENSOR
+                          </span>
+                          <span className="text-[7px] sm:text-[8px] font-mono text-[#626775] dark:text-slate-400">
+                            Encrypted Biometrics
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Motorized Deadbolt Status Latch (Lower) */}
+                      <div className="relative z-10 w-full px-2.5 py-1.5 rounded-lg bg-white/95 dark:bg-[#0c051a]/90 border border-slate-200 dark:border-purple-500/30 flex items-center justify-between shadow-sm">
+                        <div className="flex items-center gap-1.5">
+                          {doorLocked ? (
+                            <Lock className="w-3.5 h-3.5 text-emerald-600 dark:text-brand-green flex-shrink-0" />
+                          ) : (
+                            <Unlock className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" />
+                          )}
+                          <span className="text-[8px] sm:text-[9px] font-mono font-bold text-[#111218] dark:text-white">
+                            DEADBOLT {doorLocked ? "ENGAGED" : "UNLOCKED"}
+                          </span>
+                        </div>
+                        {/* Physical Bolt Extension Indicator */}
+                        <div className={`px-1.5 py-0.5 rounded text-[7px] font-mono font-bold border transition-colors ${
+                          doorLocked
+                            ? "bg-emerald-50 dark:bg-brand-green/15 text-emerald-700 dark:text-brand-green border-emerald-300 dark:border-brand-green/30"
+                            : "bg-amber-50 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-300 dark:border-amber-500/30"
+                        }`}>
+                          {doorLocked ? "SECURED" : "RETRACTED"}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Architectural Entrance Graphic (SVG & Layered UI) */}
-              <div className="relative w-full min-h-[330px] sm:min-h-[380px] md:aspect-[16/11] rounded-xl sm:rounded-2xl bg-[#EEF2F9] dark:bg-[#090413] border border-[#CBD5E1] dark:border-purple-900/40 overflow-hidden flex flex-col items-center justify-center py-2 sm:py-3 md:py-0">
-                {/* Inside Room Perspective & HUD Guided Connector Lines */}
-                <div className="absolute inset-0 pointer-events-none">
-                  <svg className="w-full h-full" viewBox="0 0 600 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    {/* Background architectural grid traces */}
-                    <g className="opacity-30 dark:opacity-20">
-                      <line x1="0" y1="60" x2="600" y2="60" stroke="#94a3b8" className="dark:stroke-[#a855f7]" strokeWidth="0.8" />
-                      <line x1="120" y1="0" x2="200" y2="180" stroke="#94a3b8" className="dark:stroke-[#a855f7]" strokeWidth="0.6" strokeDasharray="3 3" />
-                      <line x1="480" y1="0" x2="400" y2="180" stroke="#94a3b8" className="dark:stroke-[#a855f7]" strokeWidth="0.6" strokeDasharray="3 3" />
-                      <circle cx="250" cy="80" r="14" fill="#e2e8f0" stroke="#94a3b8" className="dark:fill-[#1b0e36] dark:stroke-[#4c1d95]" strokeWidth="1.5" />
-                      <circle cx="350" cy="80" r="14" fill="#e2e8f0" stroke="#94a3b8" className="dark:fill-[#1b0e36] dark:stroke-[#4c1d95]" strokeWidth="1.5" />
-                      <rect x="420" y="70" width="70" height="24" rx="3" fill="#ffffff" stroke="#94a3b8" className="dark:fill-[#120824] dark:stroke-[#4c1d95]" strokeWidth="1" />
-                      <text x="455" y="86" fill="#64748b" className="dark:fill-[#6b7280]" fontSize="8" fontFamily="monospace" textAnchor="middle">HVAC [OFF]</text>
-                      <circle cx="300" cy="115" r="5" fill="#e2e8f0" stroke="#94a3b8" className="dark:fill-[#1f1142] dark:stroke-[#6b21a8]" strokeWidth="1" />
-                      <line x1="280" y1="115" x2="320" y2="115" stroke="#94a3b8" className="dark:stroke-[#3b136f]" strokeWidth="2" strokeLinecap="round" />
-                      <line x1="300" y1="95" x2="300" y2="135" stroke="#94a3b8" className="dark:stroke-[#3b136f]" strokeWidth="2" strokeLinecap="round" />
-                    </g>
-
-                    {/* HUD GUIDED CONNECTOR LINES (Desktop only, >= md) */}
-                    <g className="hidden md:inline">
-                      {/* 1. Top-Left: Deadbolt Lock Latch -> LOCKED Status Badge */}
-                      <path
-                        d="M160 270 L115 270 L115 52"
-                        className="stroke-emerald-500 dark:stroke-brand-green/80"
-                        strokeWidth="1.2"
-                        strokeDasharray="3 3"
-                        fill="none"
-                      />
-                      <circle cx="160" cy="270" r="2.5" className="fill-emerald-500 dark:fill-brand-green" />
-                      <circle cx="115" cy="52" r="3" className="fill-emerald-500 dark:fill-brand-green" />
-                      <circle cx="115" cy="52" r="6" className="stroke-emerald-400 dark:stroke-brand-green/50 fill-none" strokeWidth="0.8" />
-
-                      {/* 2. Top-Right: Vision Optic Header -> ROOM EMPTY Status Badge */}
-                      <path
-                        d="M440 28 L485 28 L485 52"
-                        className="stroke-cyan-500 dark:stroke-brand-cyan/80"
-                        strokeWidth="1.2"
-                        strokeDasharray="3 3"
-                        fill="none"
-                      />
-                      <circle cx="440" cy="28" r="2.5" className="fill-cyan-500 dark:fill-brand-cyan" />
-                      <circle cx="485" cy="52" r="3" className="fill-cyan-500 dark:fill-brand-cyan" />
-                      <circle cx="485" cy="52" r="6" className="stroke-cyan-400 dark:stroke-brand-cyan/50 fill-none" strokeWidth="0.8" />
-
-                      {/* 3. Bottom-Left: Egress/Cutoff Relay -> ENERGY SAVING Status Badge */}
-                      <path
-                        d="M160 375 L120 375 L120 345"
-                        className="stroke-emerald-500 dark:stroke-brand-green/80"
-                        strokeWidth="1.2"
-                        strokeDasharray="3 3"
-                        fill="none"
-                      />
-                      <circle cx="160" cy="375" r="2.5" className="fill-emerald-500 dark:fill-brand-green" />
-                      <circle cx="120" cy="345" r="3" className="fill-emerald-500 dark:fill-brand-green" />
-                      <circle cx="120" cy="345" r="6" className="stroke-emerald-400 dark:stroke-brand-green/50 fill-none" strokeWidth="0.8" />
-
-                      {/* 4. Bottom-Right: Biometric/Security Core -> MONITORING ACTIVE Status Badge */}
-                      <path
-                        d="M440 205 L495 205 L495 345"
-                        className="stroke-purple-500 dark:stroke-purple-400/80"
-                        strokeWidth="1.2"
-                        strokeDasharray="3 3"
-                        fill="none"
-                      />
-                      <circle cx="440" cy="205" r="2.5" className="fill-purple-500 dark:fill-purple-400" />
-                      <circle cx="495" cy="345" r="3" className="fill-purple-500 dark:fill-purple-400" />
-                      <circle cx="495" cy="345" r="6" className="stroke-purple-400 dark:stroke-purple-300/50 fill-none" strokeWidth="0.8" />
-                    </g>
-                  </svg>
-                </div>
-
-                {/* THE SMARTSHUT DOOR FRAME (Architectural Centerpiece) */}
-                <div className="relative z-10 w-full max-w-[210px] sm:max-w-[250px] md:w-[280px] h-[310px] sm:h-[350px] md:h-[390px] rounded-xl bg-gradient-to-b from-white via-[#F4F7FC] to-[#E5EBF5] dark:bg-gradient-to-b dark:from-[#211244] dark:via-[#160c2e] dark:to-[#0c051a] p-2 sm:p-3 border-2 border-[#CBD5E1] dark:border-purple-500/40 shadow-[0_15px_35px_rgba(0,0,0,0.12),0_0_20px_rgba(0,217,139,0.1)] dark:shadow-[0_15px_45px_rgba(0,0,0,0.8)] flex flex-col justify-between my-auto">
-                  {/* Outer Door Trim & Top Sensor Header */}
-                  <div
-                    tabIndex={0}
-                    role="button"
-                    aria-label="Vision Sensor component information"
-                    onMouseEnter={() => setHoveredComponent("camera")}
-                    onMouseLeave={() => setHoveredComponent(null)}
-                    onClick={() => setHoveredComponent(hoveredComponent === "camera" ? null : "camera")}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        setHoveredComponent(hoveredComponent === "camera" ? null : "camera");
-                      }
-                    }}
-                    className="w-full flex items-center justify-between px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-lg bg-white/95 dark:bg-[#0e071e]/90 border border-[#D9DCE5] dark:border-purple-500/30 cursor-pointer transition-all hover:border-cyan-500 dark:hover:border-brand-cyan/60 focus:outline-none focus:ring-1 focus:ring-cyan-500 shadow-sm"
-                  >
-                    <div className="flex items-center gap-1.5 sm:gap-2">
-                      <div className="relative w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-slate-900 border border-brand-cyan/80 flex items-center justify-center shadow-[0_0_8px_rgba(6,182,212,0.4)]">
-                        <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse" />
-                      </div>
-                      <span className="text-[9px] sm:text-[10px] font-mono font-medium text-[#111218] dark:text-slate-300">
-                        VISION OPTIC v2
-                      </span>
-                    </div>
-                    <span className="text-[8px] sm:text-[9px] font-mono px-1.5 py-0.5 rounded bg-cyan-50 dark:bg-brand-cyan/15 text-cyan-800 dark:text-brand-cyan border border-cyan-300 dark:border-brand-cyan/30 font-semibold">
-                      SCANNING
-                    </span>
-                  </div>
-
-                  {/* Door Glass Panel / Finish */}
-                  <div className="relative flex-1 my-2 rounded-lg bg-gradient-to-b from-[#F8FAFC] to-[#EEF2F6] dark:bg-gradient-to-b dark:from-[#150a2b] dark:to-[#0a0416] border border-[#D9DCE5] dark:border-purple-500/20 p-2.5 sm:p-4 flex flex-col justify-center items-center overflow-hidden shadow-inner">
-                    <div className="absolute inset-0 bg-grid-pattern opacity-20" />
-
-                    {/* Green Energy Conduit Line */}
-                    <div className="absolute left-4 sm:left-6 top-0 bottom-0 w-[2px] bg-gradient-to-b from-brand-green/80 via-brand-green to-brand-green/20">
-                      <div className="w-full h-10 sm:h-12 bg-white blur-[1px] animate-bounce" />
-                    </div>
-
-                    {/* SmartShut Central Biometric Plate */}
-                    <div
-                      tabIndex={0}
-                      role="button"
-                      aria-label="Biometric Sensor component information"
-                      onMouseEnter={() => setHoveredComponent("fingerprint")}
-                      onMouseLeave={() => setHoveredComponent(null)}
-                      onClick={() => setHoveredComponent(hoveredComponent === "fingerprint" ? null : "fingerprint")}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          setHoveredComponent(hoveredComponent === "fingerprint" ? null : "fingerprint");
-                        }
-                      }}
-                      className="relative z-10 w-full max-w-[170px] sm:max-w-[190px] rounded-xl p-2.5 sm:p-3 bg-white dark:bg-[#110724]/90 border border-[#D9DCE5] dark:border-purple-400/30 backdrop-blur-md shadow-md dark:shadow-xl hover:border-emerald-500 dark:hover:border-brand-green/60 transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                    >
-                      <div className="flex items-center justify-between mb-1.5 sm:mb-2">
-                        <span className="text-[8px] sm:text-[9px] font-mono text-purple-800 dark:text-purple-300 uppercase tracking-wider font-semibold">
-                          BIOMETRIC SENSOR
-                        </span>
-                        <Fingerprint className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 dark:text-brand-green animate-pulse" />
-                      </div>
-
-                      {/* Fingerprint scanner pad */}
-                      <div className="relative w-12 h-12 sm:w-14 sm:h-14 mx-auto rounded-xl bg-emerald-50 dark:bg-purple-950/80 border border-emerald-400/60 dark:border-brand-green/40 flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(0,217,139,0.18)] dark:shadow-[0_0_15px_rgba(0,245,155,0.2)]">
-                        <Fingerprint className="w-7 h-7 sm:w-8 sm:h-8 text-emerald-600 dark:text-brand-green/90" />
-                        <div className="absolute left-0 right-0 h-[2px] bg-brand-green shadow-[0_0_8px_#00f59b] animate-scan-line" />
-                      </div>
-
-                      <div className="text-center mt-1.5 sm:mt-2">
-                        <span className="text-[9px] sm:text-[10px] font-mono font-bold text-emerald-800 dark:text-brand-green block leading-tight">
-                          FINGERPRINT AUTHORIZED
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Smart Lock Electronic Latch Mechanism */}
-                    <div
-                      tabIndex={0}
-                      role="button"
-                      aria-label="Smart Electronic Deadbolt component information"
-                      onMouseEnter={() => setHoveredComponent("lock")}
-                      onMouseLeave={() => setHoveredComponent(null)}
-                      onClick={() => setHoveredComponent(hoveredComponent === "lock" ? null : "lock")}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          setHoveredComponent(hoveredComponent === "lock" ? null : "lock");
-                        }
-                      }}
-                      className="mt-2 sm:mt-3 w-full max-w-[170px] sm:max-w-[190px] rounded-lg p-2 sm:p-2.5 bg-[#F8FAFC] dark:bg-[#0d051c] border border-[#D9DCE5] dark:border-purple-500/20 flex items-center justify-between hover:border-purple-400/60 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-purple-400 shadow-sm"
-                    >
-                      <div className="flex items-center gap-1.5 sm:gap-2">
-                        {doorLocked ? (
-                          <Lock className="w-3.5 h-3.5 text-emerald-600 dark:text-brand-green flex-shrink-0" />
-                        ) : (
-                          <Unlock className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" />
-                        )}
-                        <span className="text-[9px] sm:text-[10px] font-mono font-medium text-[#111218] dark:text-slate-200">
-                          DEADBOLT {doorLocked ? "ENGAGED" : "UNLOCKED"}
-                        </span>
-                      </div>
-                      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 dark:bg-brand-green shadow-[0_0_6px_#00f59b] flex-shrink-0" />
-                    </div>
-                  </div>
-
-                  {/* Bottom Door Energy & Egress Channel */}
-                  <div
-                    tabIndex={0}
-                    role="button"
-                    aria-label="Energy Cutoff and Egress component information"
-                    onMouseEnter={() => setHoveredComponent("energy")}
-                    onMouseLeave={() => setHoveredComponent(null)}
-                    onClick={() => setHoveredComponent(hoveredComponent === "energy" ? null : "energy")}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        setHoveredComponent(hoveredComponent === "energy" ? null : "energy");
-                      }
-                    }}
-                    className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-white/95 dark:bg-[#0e0620]/90 border border-[#D9DCE5] dark:border-purple-500/20 text-[8px] sm:text-[9px] font-mono text-[#626775] dark:text-slate-400 cursor-pointer hover:border-emerald-500/50 dark:hover:border-brand-green/40 focus:outline-none focus:ring-1 focus:ring-emerald-500 shadow-sm"
-                  >
-                    <span className="flex items-center gap-1 text-emerald-700 dark:text-brand-green font-semibold truncate">
-                      <Zap className="w-3 h-3 text-emerald-600 dark:text-brand-green flex-shrink-0" />
-                      CUTOFF: READY
-                    </span>
-                    <span className="text-purple-800 dark:text-purple-300 font-semibold flex-shrink-0">SAFE EGRESS</span>
-                  </div>
-                </div>
-
-                {/* DESKTOP FLOATING STATUS UI PANELS (Hidden on mobile <= md, Visible on desktop >= md) */}
-                {/* 1. Top Left: LOCKED */}
-                <div className="hidden md:block absolute top-6 left-6 z-20 animate-float-gentle">
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/95 dark:bg-[#140a2b]/85 border border-emerald-400/60 dark:border-brand-green/40 backdrop-blur-md shadow-md dark:shadow-lg">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-brand-green animate-ping" />
-                    <Lock className="w-3.5 h-3.5 text-emerald-600 dark:text-brand-green" />
-                    <span className="text-xs font-mono font-bold text-[#111218] dark:text-white tracking-wider">
+              {/* 3. STATUS: Clean Grid BELOW the Door (Equal height, zero overlap, proper CSS grid) */}
+              <div className="relative z-10 grid grid-cols-2 gap-2 sm:gap-2.5 my-1">
+                {/* Status 1: LOCKED / UNLOCKED */}
+                <div className={`p-2.5 sm:p-3 rounded-xl border flex flex-col justify-center transition-all min-h-[58px] sm:min-h-[64px] ${
+                  doorLocked
+                    ? "bg-emerald-50/70 dark:bg-brand-green/10 border-emerald-400/60 dark:border-brand-green/30"
+                    : "bg-amber-50/70 dark:bg-amber-500/10 border-amber-400/60 dark:border-amber-500/30"
+                }`}>
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <span className={`w-1.5 h-1.5 rounded-full ${doorLocked ? "bg-emerald-500 dark:bg-brand-green animate-ping" : "bg-amber-500 animate-pulse"}`} />
+                    <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-[#111218] dark:text-white">
                       {doorLocked ? "LOCKED" : "UNLOCKED"}
                     </span>
                   </div>
-                </div>
-
-                {/* 2. Top Right: ROOM EMPTY */}
-                <div
-                  className="hidden md:block absolute top-6 right-6 z-20 animate-float-gentle"
-                  style={{ animationDelay: "1s" }}
-                >
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/95 dark:bg-[#140a2b]/85 border border-cyan-400/60 dark:border-brand-cyan/40 backdrop-blur-md shadow-md dark:shadow-lg">
-                    <Eye className="w-3.5 h-3.5 text-cyan-600 dark:text-brand-cyan" />
-                    <span className="text-xs font-mono font-bold text-cyan-800 dark:text-brand-cyan tracking-wider">
-                      ROOM EMPTY
-                    </span>
-                    <span className="text-[10px] font-mono text-[#626775] dark:text-slate-400">(VERIFIED)</span>
-                  </div>
-                </div>
-
-                {/* 3. Bottom Left: ENERGY SAVING */}
-                <div
-                  className="hidden md:block absolute bottom-6 left-6 z-20 animate-float-gentle"
-                  style={{ animationDelay: "2s" }}
-                >
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50/95 dark:bg-[#0c1c18]/90 border border-emerald-500/60 dark:border-brand-green/60 backdrop-blur-md shadow-md dark:shadow-[0_0_15px_rgba(0,245,155,0.2)]">
-                    <Zap className="w-3.5 h-3.5 text-emerald-600 dark:text-brand-green animate-pulse" />
-                    <span className="text-xs font-mono font-bold text-emerald-900 dark:text-brand-green tracking-wider">
-                      ENERGY SAVING
-                    </span>
-                    <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-300 font-semibold">CIRCUITS ISOLATED</span>
-                  </div>
-                </div>
-
-                {/* 4. Bottom Right: MONITORING ACTIVE */}
-                <div
-                  className="hidden md:block absolute bottom-6 right-6 z-20 animate-float-gentle"
-                  style={{ animationDelay: "3s" }}
-                >
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-purple-50/95 dark:bg-[#140a2b]/85 border border-purple-300 dark:border-purple-400/40 backdrop-blur-md shadow-md dark:shadow-lg">
-                    <ShieldCheck className="w-3.5 h-3.5 text-purple-600 dark:text-brand-purple-glow" />
-                    <span className="text-xs font-mono font-bold text-purple-900 dark:text-purple-200 tracking-wider">
-                      MONITORING ACTIVE
-                    </span>
-                  </div>
-                </div>
-
-                {/* Component Hover Tooltip */}
-                {hoveredComponent && (
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none px-3.5 py-2 rounded-xl bg-white/95 dark:bg-black/95 border border-emerald-500 dark:border-brand-green text-[11px] font-mono text-emerald-900 dark:text-brand-green shadow-2xl backdrop-blur-lg animate-in fade-in zoom-in-95 max-w-[250px] text-center font-medium">
-                    {hoveredComponent === "camera" && "Integrated Vision Sensor: Tracks room entry/exit to verify occupancy"}
-                    {hoveredComponent === "fingerprint" && "High-Precision Biometric Reader: Instant encrypted authorization"}
-                    {hoveredComponent === "lock" && "Smart Electronic Deadbolt: Dual-fail safe locking with mechanical override"}
-                    {hoveredComponent === "energy" && "Smart Relay Interface: Powers down non-essential lights, fans, and ACs"}
-                  </div>
-                )}
-              </div>
-
-              {/* MOBILE BOTTOM STATUS ROW (<= md) */}
-              <div className="flex md:hidden flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 mt-2.5 z-20 relative w-full">
-                {/* 3. Bottom Left: ENERGY SAVING */}
-                <div className="flex items-center justify-between sm:justify-start gap-2 px-2.5 py-1.5 rounded-lg bg-emerald-50/95 dark:bg-[#0c1c18]/90 border border-emerald-500/60 dark:border-brand-green/60 backdrop-blur-md shadow-sm">
-                  <div className="flex items-center gap-1.5">
-                    <Zap className="w-3 h-3 text-emerald-600 dark:text-brand-green animate-pulse" />
-                    <span className="text-[10px] font-mono font-bold text-emerald-900 dark:text-brand-green tracking-wider">
-                      ENERGY SAVING
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono text-emerald-800 dark:text-emerald-300 bg-emerald-100 dark:bg-brand-green/10 px-1.5 py-0.5 rounded border border-emerald-300 dark:border-brand-green/30 font-semibold">
-                    CIRCUITS ISOLATED
+                  <span className="text-[9px] sm:text-[10px] font-mono text-[#626775] dark:text-slate-400 truncate">
+                    {doorLocked ? "Deadbolt Engaged" : "Manual Override"}
                   </span>
                 </div>
 
-                {/* 4. Bottom Right: MONITORING ACTIVE */}
-                <div className="flex items-center justify-between sm:justify-start gap-1.5 px-2.5 py-1.5 rounded-lg bg-purple-50/95 dark:bg-[#140a2b]/90 border border-purple-300 dark:border-purple-400/40 backdrop-blur-md shadow-sm">
-                  <div className="flex items-center gap-1.5">
-                    <ShieldCheck className="w-3 h-3 text-purple-600 dark:text-brand-purple-glow" />
-                    <span className="text-[10px] font-mono font-bold text-purple-900 dark:text-purple-200 tracking-wider">
+                {/* Status 2: ROOM EMPTY */}
+                <div className="p-2.5 sm:p-3 rounded-xl border bg-cyan-50/70 dark:bg-brand-cyan/10 border-cyan-400/60 dark:border-brand-cyan/30 flex flex-col justify-center min-h-[58px] sm:min-h-[64px]">
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <Eye className="w-3.5 h-3.5 text-cyan-600 dark:text-brand-cyan flex-shrink-0" />
+                    <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-cyan-800 dark:text-brand-cyan">
+                      ROOM EMPTY
+                    </span>
+                  </div>
+                  <span className="text-[9px] sm:text-[10px] font-mono text-[#626775] dark:text-slate-400 truncate">
+                    Optical Verified
+                  </span>
+                </div>
+
+                {/* Status 3: ENERGY SAVING */}
+                <div className={`p-2.5 sm:p-3 rounded-xl border flex flex-col justify-center transition-all min-h-[58px] sm:min-h-[64px] ${
+                  doorLocked
+                    ? "bg-emerald-50/70 dark:bg-brand-green/10 border-emerald-400/60 dark:border-brand-green/30"
+                    : "bg-slate-100 dark:bg-slate-900/60 border-slate-300 dark:border-slate-800"
+                }`}>
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <Zap className={`w-3.5 h-3.5 ${doorLocked ? "text-emerald-600 dark:text-brand-green animate-pulse" : "text-slate-400"}`} />
+                    <span className={`text-[10px] sm:text-xs font-mono font-bold tracking-wider ${doorLocked ? "text-emerald-800 dark:text-brand-green" : "text-slate-600 dark:text-slate-400"}`}>
+                      {doorLocked ? "ENERGY SAVING" : "POWER ACTIVE"}
+                    </span>
+                  </div>
+                  <span className="text-[9px] sm:text-[10px] font-mono text-[#626775] dark:text-slate-400 truncate">
+                    {doorLocked ? "Circuits Isolated" : "Normal Room Draw"}
+                  </span>
+                </div>
+
+                {/* Status 4: MONITORING ACTIVE */}
+                <div className="p-2.5 sm:p-3 rounded-xl border bg-purple-50/70 dark:bg-purple-950/40 border-purple-300 dark:border-purple-500/30 flex flex-col justify-center min-h-[58px] sm:min-h-[64px]">
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-purple-600 dark:text-brand-purple-glow flex-shrink-0" />
+                    <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-purple-900 dark:text-purple-200 truncate">
                       MONITORING ACTIVE
                     </span>
                   </div>
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-brand-green animate-pulse" />
+                  <span className="text-[9px] sm:text-[10px] font-mono text-[#626775] dark:text-slate-400 truncate">
+                    Continuous 24/7 Shield
+                  </span>
                 </div>
               </div>
 
-              {/* Bottom Interactive Strip */}
-              <div className="mt-3.5 pt-3 border-t border-[#D9DCE5] dark:border-purple-500/15 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs font-mono text-[#626775] dark:text-slate-300">
-                <div className="flex flex-wrap items-center justify-between sm:justify-start gap-2">
-                  <span className="text-purple-900/80 dark:text-purple-300/70 text-[11px] sm:text-xs font-semibold">Interactive Door State:</span>
+              {/* 4. FOOTER: Dedicated Row (Interactive Door State & Live HVAC/Lights Metrics) */}
+              <div className="relative z-10 mt-3 pt-3 border-t border-[#D9DCE5] dark:border-purple-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono text-[#626775] dark:text-slate-300">
+                <div className="flex items-center gap-2">
+                  <span className="text-purple-900 dark:text-purple-300 font-semibold text-[11px] sm:text-xs">
+                    Door State:
+                  </span>
                   <button
                     onClick={() => setDoorLocked(!doorLocked)}
-                    className="px-2.5 py-1 rounded-full bg-purple-100 hover:bg-purple-200 dark:bg-purple-900/50 dark:hover:bg-purple-800/60 border border-purple-300 dark:border-purple-500/40 text-purple-900 dark:text-white font-semibold flex items-center gap-1.5 transition-all text-[10px] sm:text-[11px] shadow-sm"
+                    className="px-2.5 py-1 rounded-full bg-purple-100 hover:bg-purple-200 dark:bg-purple-900/50 dark:hover:bg-purple-800/60 border border-purple-300 dark:border-purple-500/40 text-purple-900 dark:text-white font-semibold flex items-center gap-1.5 transition-all text-[10px] sm:text-[11px] shadow-sm cursor-pointer"
                   >
                     {doorLocked ? (
                       <>
@@ -450,14 +297,14 @@ export default function HeroSection() {
                   </button>
                 </div>
 
-                <div className="flex items-center justify-between sm:justify-end gap-3 text-[#626775] dark:text-slate-400 text-[10px] sm:text-[11px] font-medium">
+                <div className="flex items-center justify-between sm:justify-end gap-3 text-[10px] sm:text-[11px] font-medium text-[#626775] dark:text-slate-400">
                   <span className="flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-brand-green" />
-                    HVAC: STANDBY
+                    <span className={`w-1.5 h-1.5 rounded-full ${doorLocked ? "bg-emerald-500 dark:bg-brand-green" : "bg-amber-500 animate-pulse"}`} />
+                    HVAC: {doorLocked ? "STANDBY" : "RUNNING"}
                   </span>
                   <span className="flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-brand-green" />
-                    LIGHTS: 0W
+                    <span className={`w-1.5 h-1.5 rounded-full ${doorLocked ? "bg-emerald-500 dark:bg-brand-green" : "bg-amber-500 animate-pulse"}`} />
+                    LIGHTS: {doorLocked ? "0W" : "120W"}
                   </span>
                 </div>
               </div>
