@@ -35,10 +35,6 @@ interface RoomData {
     status: string;
     sub: string;
   };
-  circuit: {
-    status: string;
-    sub: string;
-  };
   indicators: Array<{
     label: string;
     value: string;
@@ -57,23 +53,19 @@ const ordinaryRoomData: RoomData = {
   relationshipPill: "LOCKED ≠ EMPTY",
   light: {
     status: "ON",
-    watts: "100W Active",
+    watts: "100W Constant",
   },
   ac: {
     status: "HIGH",
-    detail: "Cooling Empty Space",
+    detail: "Cooling Empty Room",
   },
   fan: {
     status: "RUNNING",
-    speed: "Full RPM",
+    speed: "High RPM",
   },
   door: {
     status: "DOOR LOCKED",
-    sub: "Perimeter Sealed",
-  },
-  circuit: {
-    status: "CIRCUITS ENERGIZED",
-    sub: "100% Baseline Draw",
+    sub: "Circuits Remain Energized",
   },
   indicators: [
     { label: "LIGHT", value: "ON (100W)" },
@@ -110,12 +102,8 @@ const smartShutRoomData: RoomData = {
     speed: "Relay Isolated",
   },
   door: {
-    status: "LOCKED + VERIFIED",
-    sub: "Sensors Confirmed Empty",
-  },
-  circuit: {
-    status: "SECURITY ACTIVE",
-    sub: "Non-Essential Isolated",
+    status: "DOOR SECURED",
+    sub: "Empty Verified • Cutoff Active",
   },
   indicators: [
     { label: "LIGHT", value: "OFF (0W)" },
@@ -140,7 +128,7 @@ function RoomIllustration({ data }: { data: RoomData }) {
 
   return (
     <div
-      className={`relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-xl p-3 sm:p-4 flex flex-col justify-between overflow-hidden border transition-all ${
+      className={`relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-xl p-3.5 sm:p-4 flex flex-col justify-between overflow-hidden border transition-all ${
         isSmartShut
           ? "bg-[#F0FDF4] dark:bg-[#050e0f] border-emerald-300 dark:border-brand-green/30"
           : "bg-[#FFF5F5] dark:bg-[#0e040f] border-rose-300 dark:border-red-500/25"
@@ -254,36 +242,28 @@ function RoomIllustration({ data }: { data: RoomData }) {
         </div>
       </div>
 
-      {/* BOTTOM ROW: DOOR & LOAD THRESHOLD */}
-      <div className="relative z-10 pt-2 border-t border-slate-200/80 dark:border-purple-500/20 flex items-center justify-between w-full">
-        {/* Door Status */}
-        <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/95 dark:bg-black/70 border border-slate-200 dark:border-slate-800 shadow-sm">
+      {/* BOTTOM ROW: DOOR / LOCK (Centered Entrance Threshold) */}
+      <div className="relative z-10 pt-2 border-t border-slate-200/80 dark:border-purple-500/20 flex items-center justify-center w-full">
+        <div
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border shadow-sm ${
+            isSmartShut
+              ? "bg-white/95 dark:bg-[#071916]/95 border-emerald-300 dark:border-brand-green/40 text-emerald-800 dark:text-brand-green"
+              : "bg-white/95 dark:bg-black/70 border-slate-300 dark:border-slate-800 text-[#111218] dark:text-slate-200"
+          }`}
+        >
           {isSmartShut ? (
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-brand-green flex-shrink-0" />
           ) : (
             <Lock className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 flex-shrink-0" />
           )}
-          <span className="text-[9px] sm:text-[10px] font-mono font-semibold text-[#111218] dark:text-slate-200 truncate">
-            {data.door.status}
-          </span>
-        </div>
-
-        {/* Circuit / Security Status */}
-        <div
-          className={`flex items-center gap-1.5 px-2 py-1 rounded-md shadow-sm border ${
-            isSmartShut
-              ? "bg-emerald-50 dark:bg-brand-green/15 border-emerald-300 dark:border-brand-green/40 text-emerald-800 dark:text-brand-green"
-              : "bg-rose-50 dark:bg-red-950/60 border-rose-300 dark:border-red-500/30 text-rose-800 dark:text-red-400"
-          }`}
-        >
-          {isSmartShut ? (
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-brand-green flex-shrink-0" />
-          ) : (
-            <Zap className="w-3.5 h-3.5 text-amber-500 animate-pulse flex-shrink-0" />
-          )}
-          <span className="text-[9px] sm:text-[10px] font-mono font-bold truncate">
-            {data.circuit.status}
-          </span>
+          <div className="text-left">
+            <span className="text-[9px] sm:text-[10px] font-mono font-bold block leading-tight">
+              {data.door.status}
+            </span>
+            <span className="text-[8px] sm:text-[9px] font-mono text-[#626775] dark:text-slate-400 block leading-tight">
+              {data.door.sub}
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -355,7 +335,7 @@ function RoomCard({ data }: { data: RoomData }) {
           </span>
         </div>
 
-        {/* 2. ROOM ILLUSTRATION (Shared Geometry) */}
+        {/* 2. ROOM ILLUSTRATION (Shared Geometry: LIGHT top-left, AC top-right, FAN center, DOOR bottom-center) */}
         <div className="my-3">
           <RoomIllustration data={data} />
         </div>
